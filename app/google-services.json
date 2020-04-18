@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "24192689615",
+    "firebase_url": "https://mybank-7b61d.firebaseio.com",
+    "project_id": "mybank-7b61d",
+    "storage_bucket": "mybank-7b61d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:24192689615:android:1d18410eb5cf7a1b1a5eba",
+        "android_client_info": {
+          "package_name": "com.example.mybank"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "24192689615-csdqt6e98f8bo36kfno977nk4tf91pap.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6E1pdAX_DxLnK70Lw3fB1azkwpvPBCvQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "24192689615-csdqt6e98f8bo36kfno977nk4tf91pap.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
