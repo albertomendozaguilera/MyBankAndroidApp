@@ -1,27 +1,24 @@
 package com.example.mybank;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
-
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.hardware.biometrics.BiometricPrompt;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CancellationSignal;
-import android.os.StrictMode;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.mybank.restclient.BankAccountInfo;
+import com.example.mybank.restclient.GetService;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -36,13 +33,19 @@ import java.net.URL;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class LogIn extends AppCompatActivity implements View.OnClickListener{
 
     private FirebaseAuth mAuth;
     private EditText etEmail, etPassword;
     //private TextView tvLogout;
     private ImageView btFingerprint;
-    private Button login;
+    private Button login, getButton;
     private ProgressDialog progressDialog;
 
     @Override
@@ -56,6 +59,8 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
         //tvLogout = findViewById(R.id.tvLogout);
         //tvLogout.setOnClickListener(this);
         login = findViewById(R.id.btLogin);
+        getButton = findViewById(R.id.button);
+        getButton.setOnClickListener(this);
         btFingerprint = findViewById(R.id.btFingerprint);
         etEmail.setVisibility(View.INVISIBLE);
         btFingerprint.setVisibility(View.INVISIBLE);
@@ -89,6 +94,7 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
                 }
             });
         }
+
     }
 
     //crea un dialog para introducir una huella
@@ -230,10 +236,36 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
-        /*switch (v.getId()){
-            case R.id.tvLogout:
-                mAuth.signOut();
+        switch (v.getId()){
+            case R.id.button:
+                getBankAccountInfos();
                 break;
-        }*/
+        }
+    }
+
+    private void getBankAccountInfos(){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://10.0.2.2:8080")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        GetService getService = retrofit.create(GetService.class);
+        Call<BankAccountInfo> call = getService.getBankAccountInfo("Alberputo");
+
+        call.enqueue(new Callback<BankAccountInfo>() {
+            @Override
+            public void onResponse(Call<BankAccountInfo> call, Response<BankAccountInfo> response) {
+                    Toast.makeText(getBaseContext(), response.body().getId(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), response.body().getName(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), String.valueOf(response.body().getMoney()), Toast.LENGTH_LONG).show();
+
+            }
+
+            @Override
+            public void onFailure(Call<BankAccountInfo> call, Throwable t) {
+                System.out.println(t.getCause());
+                System.out.println(t.getMessage());
+            }
+        });
     }
 }
