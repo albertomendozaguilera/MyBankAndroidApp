@@ -3,6 +3,7 @@ package com.example.mybank;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.hardware.biometrics.BiometricPrompt;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -27,9 +29,6 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -43,7 +42,7 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
 
     private FirebaseAuth mAuth;
     private EditText etEmail, etPassword;
-    //private TextView tvLogout;
+    private TextView btLogout;
     private ImageView btFingerprint;
     private Button login, getButton;
     private ProgressDialog progressDialog;
@@ -56,8 +55,8 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
 
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
-        //tvLogout = findViewById(R.id.tvLogout);
-        //tvLogout.setOnClickListener(this);
+        btLogout = findViewById(R.id.btLogout);
+        btLogout.setOnClickListener(this);
         login = findViewById(R.id.btLogin);
         getButton = findViewById(R.id.button);
         getButton.setOnClickListener(this);
@@ -115,12 +114,14 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
                 @Override
                 public void onAuthenticationSucceeded(BiometricPrompt.AuthenticationResult result) {
                     super.onAuthenticationSucceeded(result);
-                    activity.runOnUiThread(new Runnable() {
+                    Intent i = new Intent(getApplicationContext(), Main.class);
+                    startActivity(i);
+                    /*activity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             Toast.makeText(activity, "succed", Toast.LENGTH_LONG).show();
                         }
-                    });
+                    });*/
                 }
             });
         }
@@ -142,6 +143,8 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
+                    Intent i = new Intent(getApplicationContext(), Main.class);
+                    startActivity(i);
                     Toast.makeText(LogIn.this, "sesion iniciada", Toast.LENGTH_LONG).show();
                 }else{
                     Toast.makeText(LogIn.this, "error al iniciar sesion", Toast.LENGTH_LONG).show();
@@ -174,6 +177,8 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
                     progressDialog.dismiss();
+                    Intent i = new Intent(getApplicationContext(), Main.class);
+                    startActivity(i);
                     Toast.makeText(LogIn.this, "sesion iniciada", Toast.LENGTH_LONG).show();
                 }else{
                     progressDialog.dismiss();
@@ -195,10 +200,13 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
                                             DatabaseReference dbuser = dbr.child(mAuth.getCurrentUser().getUid());
                                             dbuser.child("email").setValue(email);
                                             dbuser.child("password").setValue(password);
-                                            //guarda el nuevo usuario en mysql
-                                            String url = "http://iesayala.ddns.net/albertomendoza/php/insertarcontacto.php/?id=" + mAuth.getCurrentUser().getUid() + "&email=" + etEmail.getText() + "&password=" + etPassword.getText();
+                                            //
+                                            //guarda el nuevo usuario en oracle
+                                            //
 
-                                            cargarUrl(url);
+                                            Intent i = new Intent(getApplicationContext(), Main.class);
+                                            startActivity(i);
+                                            Toast.makeText(LogIn.this, "usuario creado", Toast.LENGTH_LONG).show();
 
                                         }else{
                                             if (task.getException() instanceof FirebaseAuthUserCollisionException){
@@ -223,22 +231,19 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
         });
     }
 
-    public void cargarUrl(String url){
-        try {
-            URL u = new URL("");
-            u.openStream();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.button:
                 getBankAccountInfos();
+                break;
+            case R.id.btLogout:
+                mAuth.signOut();
+                Intent i = new Intent(getApplicationContext(), LogIn.class);
+                finish();
+                startActivity(i);
                 break;
         }
     }
@@ -250,14 +255,14 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
                 .build();
 
         GetService getService = retrofit.create(GetService.class);
-        Call<BankAccountInfo> call = getService.getBankAccountInfo("Alberputo");
+        Call<BankAccountInfo> call = getService.getBankAccountInfo("Alberto");
 
         call.enqueue(new Callback<BankAccountInfo>() {
             @Override
             public void onResponse(Call<BankAccountInfo> call, Response<BankAccountInfo> response) {
-                    Toast.makeText(getBaseContext(), response.body().getId(), Toast.LENGTH_LONG).show();
-                    Toast.makeText(getBaseContext(), response.body().getName(), Toast.LENGTH_LONG).show();
-                    Toast.makeText(getBaseContext(), String.valueOf(response.body().getMoney()), Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getBaseContext(), response.body().getId(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), "Nombre: "+response.body().getName(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), "Dinero: "+String.valueOf(response.body().getMoney()), Toast.LENGTH_LONG).show();
 
             }
 
