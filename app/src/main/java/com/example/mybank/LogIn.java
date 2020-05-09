@@ -21,6 +21,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mybank.restclient.BankAccountInfo;
 import com.example.mybank.restclient.GetService;
+import com.example.mybank.restclient.PostService;
+import com.example.mybank.restclient.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -207,6 +209,7 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
                                             Intent i = new Intent(getApplicationContext(), Main.class);
                                             startActivity(i);
                                             Toast.makeText(LogIn.this, "usuario creado", Toast.LENGTH_LONG).show();
+                                            addUserToDatabase();
 
                                         }else{
                                             if (task.getException() instanceof FirebaseAuthUserCollisionException){
@@ -250,7 +253,7 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
 
     private void getBankAccountInfos(){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:8081")
+                .baseUrl("http://10.0.2.2:8080")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -272,5 +275,34 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
                 System.out.println(t.getMessage());
             }
         });
+    }
+
+    private void addUserToDatabase(){
+        User user = new User();
+        user.setBlacklist(true);
+        user.setEmail("donsufles@gmail.com");
+        user.setName("Don Sufles");
+        user.setId("1010Android");
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://10.0.2.2:8080")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        PostService postService = retrofit.create(PostService.class);
+        Call<User> call = postService.addUser(user);
+
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                Toast.makeText(getBaseContext(), "Http Status: " + response.code(), Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Toast.makeText(getBaseContext(), "Http Status: " + t.getCause(), Toast.LENGTH_LONG).show();
+            }
+        });
+
     }
 }
