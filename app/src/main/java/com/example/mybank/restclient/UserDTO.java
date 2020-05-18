@@ -1,6 +1,6 @@
 package com.example.mybank.restclient;
 
-public class User {
+public class UserDTO {
     private String id;
     private String email;
     private String name;

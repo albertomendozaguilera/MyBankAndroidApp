@@ -9,6 +9,6 @@ public interface PostService {
 
     @POST("/user/adduser")
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
-    Call<User> addUser(@Body User user);
+    Call<UserDTO> addUser(@Body UserDTO userDTO);
 
 }

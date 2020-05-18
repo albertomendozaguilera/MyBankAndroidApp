@@ -19,10 +19,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.mybank.restclient.BankAccountInfo;
+import com.example.mybank.restclient.AccountDTO;
 import com.example.mybank.restclient.GetService;
 import com.example.mybank.restclient.PostService;
-import com.example.mybank.restclient.User;
+import com.example.mybank.restclient.UserDTO;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -69,7 +69,6 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
         progressDialog = new ProgressDialog(this);
 
         if (mAuth.getCurrentUser() != null){
-
             login.setText("SignIn");
             btFingerprint.setVisibility(View.VISIBLE);
             login.setOnClickListener(new View.OnClickListener() {
@@ -118,12 +117,6 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
                     super.onAuthenticationSucceeded(result);
                     Intent i = new Intent(getApplicationContext(), Main.class);
                     startActivity(i);
-                    /*activity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(activity, "succed", Toast.LENGTH_LONG).show();
-                        }
-                    });*/
                 }
             });
         }
@@ -184,7 +177,7 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
                     Toast.makeText(LogIn.this, "sesion iniciada", Toast.LENGTH_LONG).show();
                 }else{
                     progressDialog.dismiss();
-                    //si no existe pregunta si quiere crear uno nuevo
+                    //si no existe el usuario pregunta si quiere crear uno nuevo
                         AlertDialog.Builder builder = new AlertDialog.Builder(LogIn.this);
                         builder.setMessage("¿quieres crear uno nuevo?")
                                 .setTitle("El usuario no existe");
@@ -202,14 +195,12 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
                                             DatabaseReference dbuser = dbr.child(mAuth.getCurrentUser().getUid());
                                             dbuser.child("email").setValue(email);
                                             dbuser.child("password").setValue(password);
-                                            //
-                                            //guarda el nuevo usuario en oracle
-                                            //
 
+                                            //inicia la main activity
                                             Intent i = new Intent(getApplicationContext(), Main.class);
                                             startActivity(i);
                                             Toast.makeText(LogIn.this, "usuario creado", Toast.LENGTH_LONG).show();
-                                            addUserToDatabase();
+                                            //addUserToDatabase();
 
                                         }else{
                                             if (task.getException() instanceof FirebaseAuthUserCollisionException){
@@ -240,7 +231,7 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.button:
-                getBankAccountInfos();
+                //getBankAccountInfos();
                 break;
             case R.id.btLogout:
                 mAuth.signOut();
@@ -251,38 +242,38 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
         }
     }
 
-    private void getBankAccountInfos(){
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:8080")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        GetService getService = retrofit.create(GetService.class);
-        Call<BankAccountInfo> call = getService.getBankAccountInfo("Alberto");
-
-        call.enqueue(new Callback<BankAccountInfo>() {
-            @Override
-            public void onResponse(Call<BankAccountInfo> call, Response<BankAccountInfo> response) {
-                    //Toast.makeText(getBaseContext(), response.body().getId(), Toast.LENGTH_LONG).show();
-                    Toast.makeText(getBaseContext(), "Nombre: "+response.body().getName(), Toast.LENGTH_LONG).show();
-                    Toast.makeText(getBaseContext(), "Dinero: "+String.valueOf(response.body().getMoney()), Toast.LENGTH_LONG).show();
-
-            }
-
-            @Override
-            public void onFailure(Call<BankAccountInfo> call, Throwable t) {
-                System.out.println(t.getCause());
-                System.out.println(t.getMessage());
-            }
-        });
-    }
+//    private void getBankAccountInfos(){
+//        Retrofit retrofit = new Retrofit.Builder()
+//                .baseUrl("http://10.0.2.2:8080")
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .build();
+//
+//        GetService getService = retrofit.create(GetService.class);
+//        Call<AccountDTO> call = getService.getBankAccountInfo("Alberto");
+//
+//        call.enqueue(new Callback<AccountDTO>() {
+//            @Override
+//            public void onResponse(Call<AccountDTO> call, Response<AccountDTO> response) {
+//                    //Toast.makeText(getBaseContext(), response.body().getId(), Toast.LENGTH_LONG).show();
+//                    //Toast.makeText(getBaseContext(), "Nombre: "+response.body().getName(), Toast.LENGTH_LONG).show();
+//                    //Toast.makeText(getBaseContext(), "Dinero: "+String.valueOf(response.body().getMoney()), Toast.LENGTH_LONG).show();
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<AccountDTO> call, Throwable t) {
+//                System.out.println(t.getCause());
+//                System.out.println(t.getMessage());
+//            }
+//        });
+//    }
 
     private void addUserToDatabase(){
-        User user = new User();
-        user.setBlacklist(true);
-        user.setEmail("donsufles@gmail.com");
-        user.setName("Don Sufles");
-        user.setId("1010Android");
+        UserDTO userDTO = new UserDTO();
+        userDTO.setBlacklist(true);
+        userDTO.setEmail("donsufles@gmail.com");
+        userDTO.setName("Don Sufles");
+        userDTO.setId("1010Android");
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://10.0.2.2:8080")
@@ -290,16 +281,16 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
                 .build();
 
         PostService postService = retrofit.create(PostService.class);
-        Call<User> call = postService.addUser(user);
+        Call<UserDTO> call = postService.addUser(userDTO);
 
-        call.enqueue(new Callback<User>() {
+        call.enqueue(new Callback<UserDTO>() {
             @Override
-            public void onResponse(Call<User> call, Response<User> response) {
+            public void onResponse(Call<UserDTO> call, Response<UserDTO> response) {
                 Toast.makeText(getBaseContext(), "Http Status: " + response.code(), Toast.LENGTH_LONG).show();
             }
 
             @Override
-            public void onFailure(Call<User> call, Throwable t) {
+            public void onFailure(Call<UserDTO> call, Throwable t) {
                 Toast.makeText(getBaseContext(), "Http Status: " + t.getCause(), Toast.LENGTH_LONG).show();
             }
         });

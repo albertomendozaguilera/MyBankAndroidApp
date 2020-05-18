@@ -8,7 +8,17 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
+
+import com.example.mybank.restclient.AccountDTO;
+import com.example.mybank.restclient.GetService;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Main extends AppCompatActivity implements View.OnClickListener{
 
@@ -43,6 +53,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener{
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.mainFragment, fragmentsList[0]);
         ft.commit();
+        getBankAccountInfos();
     }
 
     @Override
@@ -74,6 +85,36 @@ public class Main extends AppCompatActivity implements View.OnClickListener{
                 break;
         }
     }
+
+
+    private void getBankAccountInfos(){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://10.0.2.2:8080")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        GetService getService = retrofit.create(GetService.class);
+        Call<List<AccountDTO>> call = getService.getBankAccountInfo("1000Android");
+
+        call.enqueue(new Callback<List<AccountDTO>>() {
+            @Override
+            public void onResponse(Call<List<AccountDTO>> call, Response<List<AccountDTO>> response) {
+                //Toast.makeText(getBaseContext(), response.body().getId(), Toast.LENGTH_LONG).show();
+                //Toast.makeText(getBaseContext(), "Nombre: "+response.body().getName(), Toast.LENGTH_LONG).show();
+                //Toast.makeText(getBaseContext(), "Dinero: "+String.valueOf(response.body().getMoney()), Toast.LENGTH_LONG).show();
+                for (int i = 0; i < response.body().size(); i++) {
+                    System.out.println(response.body().get(i).toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<AccountDTO>> call, Throwable t) {
+                System.out.println(t.getCause());
+                System.out.println(t.getMessage());
+            }
+        });
+    }
+
 
     @Override
     public void onBackPressed() {
