@@ -1,10 +1,13 @@
 package com.example.mybank.restclient;
 
+import java.util.ArrayList;
+
 public class AccountDTO {
     private UserDTO userDTO;
     private String iban;
     private String name;
     private double balance;
+    private ArrayList<PaymentTransactionsDTO> transactionsDTOList;
 
     public UserDTO getUserDTO() {
         return userDTO;
@@ -36,6 +39,14 @@ public class AccountDTO {
 
     public void setBalance(double balance) {
         this.balance = balance;
+    }
+
+    public ArrayList<PaymentTransactionsDTO> getTransactionsDTOList() {
+        return transactionsDTOList;
+    }
+
+    public void setTransactionsDTOList(ArrayList<PaymentTransactionsDTO> transactionsDTOList) {
+        this.transactionsDTOList = transactionsDTOList;
     }
 
     @Override

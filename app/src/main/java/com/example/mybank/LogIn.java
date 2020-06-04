@@ -43,10 +43,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class LogIn extends AppCompatActivity implements View.OnClickListener{
 
     private FirebaseAuth mAuth;
-    private EditText etEmail, etPassword;
+    private EditText etUsername, etEmail, etPassword;
     private TextView btLogout;
     private ImageView btFingerprint;
-    private Button login, getButton;
+    private Button login;
     private ProgressDialog progressDialog;
 
     @Override
@@ -55,14 +55,14 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
         setContentView(R.layout.activity_log_in);
         mAuth = FirebaseAuth.getInstance();
 
+        etUsername = findViewById(R.id.etUsername);
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
         btLogout = findViewById(R.id.btLogout);
         btLogout.setOnClickListener(this);
         login = findViewById(R.id.btLogin);
-        getButton = findViewById(R.id.button);
-        getButton.setOnClickListener(this);
         btFingerprint = findViewById(R.id.btFingerprint);
+        etUsername.setVisibility(View.INVISIBLE);
         etEmail.setVisibility(View.INVISIBLE);
         btFingerprint.setVisibility(View.INVISIBLE);
 
@@ -83,9 +83,10 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
                     fingerprint();
                 }
             });
-            fingerprint();
+            //fingerprint();
         }else{
             login.setText("SignUp");
+            etUsername.setVisibility(View.VISIBLE);
             etEmail.setVisibility(View.VISIBLE);
             login.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -127,7 +128,7 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
         final String password = etPassword.getText().toString().trim();
 
         if (TextUtils.isEmpty(password)){
-            Toast.makeText(this, "error  pass", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "contraseña incorrecta", Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -152,9 +153,14 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
 
     //logear usuario o crear uno nuevo si no existe
     public void signUp(){
+        final String username = etUsername.getText().toString().trim();
         final String email = etEmail.getText().toString().trim();
         final String password = etPassword.getText().toString().trim();
 
+        if (TextUtils.isEmpty(username)){
+            Toast.makeText(this, "Debes introducir un usuario", Toast.LENGTH_LONG).show();
+            return;
+        }
         if (TextUtils.isEmpty(email)){
             Toast.makeText(this, "Debes introducir un email", Toast.LENGTH_LONG).show();
             return;
@@ -190,6 +196,7 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
                                     @Override
                                     public void onComplete(@NonNull Task<AuthResult> task) {
                                         if (task.isSuccessful()){
+                                            addUserToDatabase(mAuth.getUid(), username, email);
                                             //registra y guarda el el nuevo usuario en firebase
                                             DatabaseReference dbr = FirebaseDatabase.getInstance().getReference().child("users");
                                             DatabaseReference dbuser = dbr.child(mAuth.getCurrentUser().getUid());
@@ -200,7 +207,6 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
                                             Intent i = new Intent(getApplicationContext(), Main.class);
                                             startActivity(i);
                                             Toast.makeText(LogIn.this, "usuario creado", Toast.LENGTH_LONG).show();
-                                            //addUserToDatabase();
 
                                         }else{
                                             if (task.getException() instanceof FirebaseAuthUserCollisionException){
@@ -230,9 +236,6 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.button:
-                //getBankAccountInfos();
-                break;
             case R.id.btLogout:
                 mAuth.signOut();
                 Intent i = new Intent(getApplicationContext(), LogIn.class);
@@ -268,12 +271,12 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
 //        });
 //    }
 
-    private void addUserToDatabase(){
+    private void addUserToDatabase(String id, String name, String email){
         UserDTO userDTO = new UserDTO();
-        userDTO.setBlacklist(true);
-        userDTO.setEmail("donsufles@gmail.com");
-        userDTO.setName("Don Sufles");
-        userDTO.setId("1010Android");
+        userDTO.setBlacklist(false);
+        userDTO.setEmail(email);
+        userDTO.setName(name);
+        userDTO.setId(id);
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://10.0.2.2:8080")

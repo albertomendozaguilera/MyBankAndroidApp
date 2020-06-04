@@ -8,7 +8,12 @@ import retrofit2.http.Query;
 
 public interface GetService {
 
+    @GET("/user/byid")
+    Call <List<UserDTO>> getUserFromId(@Query("userId") String userId);
+
     @GET("/account/allfromuserid")
     Call<List<AccountDTO>> getBankAccountInfo(@Query("userId") String userId);
 
+    @GET("/transactions/myaccount")
+    Call<List<PaymentTransactionsDTO>> getPaymentTransactions(@Query("userId") String iban);
 }

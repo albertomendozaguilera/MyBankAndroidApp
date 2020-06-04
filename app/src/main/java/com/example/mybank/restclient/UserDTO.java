@@ -1,10 +1,14 @@
 package com.example.mybank.restclient;
 
-public class UserDTO {
+import java.io.Serializable;
+import java.util.ArrayList;
+
+public class UserDTO implements Serializable {
     private String id;
     private String email;
     private String name;
     private boolean blacklist;
+    private ArrayList<AccountDTO> accountsList;
 
     public String getId() {
         return id;
@@ -36,5 +40,13 @@ public class UserDTO {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public ArrayList<AccountDTO> getAccountsList() {
+        return accountsList;
+    }
+
+    public void setAccountsList(ArrayList<AccountDTO> accountsList) {
+        this.accountsList = accountsList;
     }
 }

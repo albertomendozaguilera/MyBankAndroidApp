@@ -34,7 +34,7 @@
                     android:layout_height="match_parent">
 
                     <TextView
-                        android:id="@+id/textView18"
+                        android:id="@+id/tvMonth1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -44,7 +44,7 @@
                         android:textStyle="bold|italic" />
 
                     <TextView
-                        android:id="@+id/textView19"
+                        android:id="@+id/tvMonth2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -54,7 +54,7 @@
                         android:textStyle="bold|italic" />
 
                     <TextView
-                        android:id="@+id/textView20"
+                        android:id="@+id/tvMonth3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -64,7 +64,7 @@
                         android:textStyle="bold|italic" />
 
                     <TextView
-                        android:id="@+id/textView21"
+                        android:id="@+id/tvMonth4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -133,7 +133,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/textView22"
+                    android:id="@+id/tvMonth44"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="#C9EEFF"
@@ -143,7 +143,7 @@
                     android:textStyle="bold|italic" />
 
                 <TextView
-                    android:id="@+id/textView23"
+                    android:id="@+id/tvSavings"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="#C9EEFF"
@@ -186,7 +186,7 @@
                         android:layout_height="match_parent">
 
                         <TextView
-                            android:id="@+id/textView26"
+                            android:id="@+id/tvIncome"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -195,7 +195,7 @@
                             android:textSize="36sp" />
 
                         <TextView
-                            android:id="@+id/textView27"
+                            android:id="@+id/tvExpenses"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
