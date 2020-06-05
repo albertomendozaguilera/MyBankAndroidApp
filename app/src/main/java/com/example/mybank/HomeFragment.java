@@ -1,20 +1,15 @@
 package com.example.mybank;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelStore;
-import androidx.lifecycle.ViewModelStoreOwner;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
 
 import com.example.mybank.restclient.AccountDTO;
 import com.example.mybank.restclient.GetService;
@@ -49,7 +44,6 @@ public class HomeFragment extends Fragment {
         if (getArguments() != null){
             user = (UserDTO) getArguments().getSerializable("user");
         }
-        //setTexto(""+ user.getName());
     }
 
 
@@ -69,6 +63,8 @@ public class HomeFragment extends Fragment {
                 startActivity(i);
             }
         });
+        l.setForeground(null);
+        setTexto(""+ user.getName());
 
         //getBankAccountInfo();
 

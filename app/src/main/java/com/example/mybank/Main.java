@@ -44,21 +44,16 @@ public class Main extends AppCompatActivity implements View.OnClickListener{
 
         accountsList = new ArrayList();
 
-        getUserInfo();
+        getUserInfo(new OnUserInfoResponse() {
+            @Override
+            public void getUserDTO(UserDTO userDTO) {
+                user = userDTO;
 
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("user", user);
+                createViewWithFragments();
+            }
+        });
 
-        setFragmentConfiguration(bundle);
 
-        setButtonsViewById();
-
-        setButtonsClickListener();
-
-        fm = getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        ft.replace(R.id.mainFragment, fragmentsList[0]);
-        ft.commit();
     }
 
     @Override
@@ -89,7 +84,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener{
         }
     }
 
-    private void getUserInfo(){
+    private void getUserInfo(final OnUserInfoResponse callback){
         mAuth = FirebaseAuth.getInstance();
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -103,8 +98,9 @@ public class Main extends AppCompatActivity implements View.OnClickListener{
         call.enqueue(new Callback<UserDTO>() {
             @Override
             public void onResponse(Call<UserDTO> call, Response<UserDTO> response) {
-                if (response.body() != null) {
-                    getUserInfoFromResponse(response.body());
+
+                if (response.isSuccessful()) {
+                    callback.getUserDTO(response.body());
                 }else{
                     Toast.makeText(getApplicationContext(), "Error al cargar los datos", Toast.LENGTH_LONG).show();
                     System.out.println("IndexOutOfBoundException");
@@ -121,14 +117,26 @@ public class Main extends AppCompatActivity implements View.OnClickListener{
         });
     }
 
+    private void createViewWithFragments() {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("user", user);
+
+        setFragmentConfiguration(bundle);
+
+        setButtonsViewById();
+
+        setButtonsClickListener();
+
+        fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.mainFragment, fragmentsList[0]);
+        ft.commit();
+    }
+
 
     @Override
     public void onBackPressed() {
         finishAffinity();
-    }
-
-    private void getUserInfoFromResponse(UserDTO userDTO){
-        this.user = userDTO;
     }
 
     private void setButtonsClickListener() {
