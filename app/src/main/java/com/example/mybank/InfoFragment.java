@@ -1,15 +1,14 @@
 package com.example.mybank;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.mybank.restclient.PaymentTransactionsDTO;
+import androidx.fragment.app.Fragment;
+
+import com.example.mybank.restclient.dto.PaymentTransactionsDTO;
 
 import java.util.ArrayList;
 import java.util.Calendar;

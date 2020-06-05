@@ -1,14 +1,14 @@
 package com.example.mybank;
 
+import android.content.Intent;
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
-import android.os.Bundle;
-
-import com.example.mybank.restclient.GetService;
-import com.example.mybank.restclient.PaymentTransactionsDTO;
+import com.example.mybank.restclient.dto.PaymentTransactionsDTO;
+import com.example.mybank.restclient.interfaces.GetService;
 
 import java.util.ArrayList;
 import java.util.List;

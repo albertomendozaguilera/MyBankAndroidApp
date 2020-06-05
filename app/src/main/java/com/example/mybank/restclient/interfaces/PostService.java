@@ -1,4 +1,6 @@
-package com.example.mybank.restclient;
+package com.example.mybank.restclient.interfaces;
+
+import com.example.mybank.restclient.dto.UserDTO;
 
 import retrofit2.Call;
 import retrofit2.http.Body;

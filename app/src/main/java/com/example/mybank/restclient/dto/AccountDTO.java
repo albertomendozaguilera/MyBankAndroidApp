@@ -1,4 +1,4 @@
-package com.example.mybank.restclient;
+package com.example.mybank.restclient.dto;
 
 import java.util.ArrayList;
 

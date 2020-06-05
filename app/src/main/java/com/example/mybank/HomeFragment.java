@@ -11,10 +11,10 @@ import android.widget.Toast;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
-import com.example.mybank.restclient.AccountDTO;
-import com.example.mybank.restclient.GetService;
-import com.example.mybank.restclient.PaymentTransactionsDTO;
-import com.example.mybank.restclient.UserDTO;
+import com.example.mybank.restclient.dto.AccountDTO;
+import com.example.mybank.restclient.dto.PaymentTransactionsDTO;
+import com.example.mybank.restclient.dto.UserDTO;
+import com.example.mybank.restclient.interfaces.GetService;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;

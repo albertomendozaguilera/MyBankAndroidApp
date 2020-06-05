@@ -1,7 +1,5 @@
-package com.example.mybank.restclient;
+package com.example.mybank.restclient.dto;
 
-
-import java.sql.Date;
 
 public class PaymentTransactionsDTO {
     String id;

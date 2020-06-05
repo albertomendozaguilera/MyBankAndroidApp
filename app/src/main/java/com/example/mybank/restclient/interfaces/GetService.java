@@ -1,4 +1,8 @@
-package com.example.mybank.restclient;
+package com.example.mybank.restclient.interfaces;
+
+import com.example.mybank.restclient.dto.AccountDTO;
+import com.example.mybank.restclient.dto.PaymentTransactionsDTO;
+import com.example.mybank.restclient.dto.UserDTO;
 
 import java.util.List;
 

@@ -19,10 +19,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.mybank.restclient.AccountDTO;
-import com.example.mybank.restclient.GetService;
-import com.example.mybank.restclient.PostService;
-import com.example.mybank.restclient.UserDTO;
+import com.example.mybank.restclient.dto.UserDTO;
+import com.example.mybank.restclient.interfaces.PostService;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;

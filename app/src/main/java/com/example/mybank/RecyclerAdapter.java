@@ -9,7 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mybank.restclient.PaymentTransactionsDTO;
+import com.example.mybank.restclient.dto.PaymentTransactionsDTO;
 
 import java.util.ArrayList;
 

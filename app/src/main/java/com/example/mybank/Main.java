@@ -10,49 +10,48 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.mybank.restclient.AccountDTO;
-import com.example.mybank.restclient.GetService;
-import com.example.mybank.restclient.UserDTO;
+import com.example.mybank.restclient.controllers.UserController;
+import com.example.mybank.restclient.dto.AccountDTO;
+import com.example.mybank.restclient.dto.UserDTO;
+import com.example.mybank.restclient.interfaces.OnUserInfoResponse;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Main extends AppCompatActivity implements View.OnClickListener{
 
-    boolean a = true;
     Fragment[] fragmentsList;
     Button btHome, btInfo, btLoan, btTransfer, btUser;
     FragmentManager fm;
-    ArrayList transactionsList;
     ArrayList <AccountDTO> accountsList;
-    //RecyclerView recyclerView;
-    //RecyclerView.Adapter adapter;
     UserDTO user = new UserDTO();
     FirebaseAuth mAuth;
-
+    UserController userController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        userController = new UserController();
+
         setContentView(R.layout.activity_main);
 
         accountsList = new ArrayList();
 
-        getUserInfo(new OnUserInfoResponse() {
+        userController.getUserInfo(mAuth, new OnUserInfoResponse() {
             @Override
             public void getUserDTO(UserDTO userDTO) {
                 user = userDTO;
 
                 createViewWithFragments();
             }
-        });
 
+            @Override
+            public void onError(Throwable t) {
+                Toast.makeText(getApplicationContext(), " los servicios se encuentran en mantenimiento en estos momentos, intentelo de nuevo mas tarde", Toast.LENGTH_LONG).show();
+                System.out.println(t.getMessage());
+            }
+        });
 
     }
 
@@ -84,38 +83,6 @@ public class Main extends AppCompatActivity implements View.OnClickListener{
         }
     }
 
-    private void getUserInfo(final OnUserInfoResponse callback){
-        mAuth = FirebaseAuth.getInstance();
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:8080")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        GetService getService = retrofit.create(GetService.class);
-        Call<UserDTO> call = getService.getUserFromId(mAuth.getUid());
-
-        call.enqueue(new Callback<UserDTO>() {
-            @Override
-            public void onResponse(Call<UserDTO> call, Response<UserDTO> response) {
-
-                if (response.isSuccessful()) {
-                    callback.getUserDTO(response.body());
-                }else{
-                    Toast.makeText(getApplicationContext(), "Error al cargar los datos", Toast.LENGTH_LONG).show();
-                    System.out.println("IndexOutOfBoundException");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UserDTO> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), " los servicios se encuentran en mantenimiento en estos momentos, intentelo de nuevo mas tarde", Toast.LENGTH_LONG).show();
-                System.out.println(t.getCause());
-                System.out.println(t.getMessage());
-
-            }
-        });
-    }
 
     private void createViewWithFragments() {
         Bundle bundle = new Bundle();
