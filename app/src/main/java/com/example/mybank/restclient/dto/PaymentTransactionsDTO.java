@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 public class PaymentTransactionsDTO implements Serializable {
     String id;
-    String iban;
+    AccountDTO accountDTO;
     double quantity;
     String concept;
     String datetime;
@@ -21,12 +21,12 @@ public class PaymentTransactionsDTO implements Serializable {
         this.id = id;
     }
 
-    public String getIban() {
-        return iban;
+    public AccountDTO getAccountDTO() {
+        return accountDTO;
     }
 
-    public void setIban(String iban) {
-        this.iban = iban;
+    public void setAccountDTO(AccountDTO accountDTO) {
+        this.accountDTO = accountDTO;
     }
 
     public double getQuantity() {
@@ -81,7 +81,7 @@ public class PaymentTransactionsDTO implements Serializable {
     public String toString() {
         return "PaymentTransactionsDTO{" +
                 "id='" + id + '\'' +
-                ", iban='" + iban + '\'' +
+                ", accountDTO='" + accountDTO + '\'' +
                 ", quantity=" + quantity +
                 ", concept='" + concept + '\'' +
                 ", datetime=" + datetime +

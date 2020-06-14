@@ -1,10 +1,6 @@
 package com.example.mybank;
 
-import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,23 +8,17 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
 
 import com.example.mybank.restclient.controllers.PaymentWaysController;
 import com.example.mybank.restclient.dto.AccountDTO;
 import com.example.mybank.restclient.dto.PaymentWayDTO;
 import com.example.mybank.restclient.dto.UserDTO;
 import com.example.mybank.restclient.interfaces.OnPaymentWaysResponse;
-import com.example.mybank.restclient.interfaces.PostService;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoanFragment extends Fragment {
 
@@ -88,7 +78,7 @@ public class LoanFragment extends Fragment {
 
                     @Override
                     public void onFailure(Call<UserDTO> call, Throwable t) {
-                        Toast.makeText(getActivity().getApplicationContext(), "Http Status: " + t.getCause(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity().getApplicationContext(), "Http Status: " + t.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
             }

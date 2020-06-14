@@ -275,7 +275,7 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
 //
 //            @Override
 //            public void onFailure(Call<AccountDTO> call, Throwable t) {
-//                System.out.println(t.getCause());
+//                System.out.println(t.getMessage());
 //                System.out.println(t.getMessage());
 //            }
 //        });
@@ -304,7 +304,7 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
 
             @Override
             public void onFailure(Call<UserDTO> call, Throwable t) {
-                Toast.makeText(getBaseContext(), "Http Status: " + t.getCause(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getBaseContext(), "Http Status: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
 

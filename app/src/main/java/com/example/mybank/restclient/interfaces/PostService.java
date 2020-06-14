@@ -21,6 +21,6 @@ public interface PostService {
 
     @POST("/transactions/addtransaction")
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
-    Call<PaymentTransactionsDTO> addTransaction(@Body PaymentTransactionsDTO paymentTransactionsDTO);
+    Call<Void> addTransaction(@Body PaymentTransactionsDTO paymentTransactionsDTO);
 
 }

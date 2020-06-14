@@ -1,10 +1,5 @@
 package com.example.mybank;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.preference.PreferenceManager;
-
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,6 +7,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 
 import com.example.mybank.restclient.dto.PaymentTransactionsDTO;
 import com.example.mybank.restclient.dto.UserDTO;
@@ -41,6 +40,15 @@ public class AddTransferByAccount extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         user = (UserDTO) extras.getSerializable("user");
+
+        UserDTO accountUser = new UserDTO();
+        accountUser.setBlacklist(user.isBlacklist());
+        accountUser.setEmail(user.getEmail());
+        accountUser.setId(user.getId());
+        accountUser.setName(user.getName());
+
+        user.getAccountsList().get(accountId).setUserDTO(accountUser);
+
         preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         getSelectedAccountId();
@@ -55,15 +63,15 @@ public class AddTransferByAccount extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 PaymentTransactionsDTO transactionDTO = new PaymentTransactionsDTO();
-                transactionDTO.setId("" + getLastTransaction());
-                transactionDTO.setIban(preferences.getString("selectedAccount", "false"));
+                transactionDTO.setId(null);
+                transactionDTO.setAccountDTO(user.getAccountsList().get(accountId));
                 transactionDTO.setDestinyAccount(etIban.getText().toString());
                 transactionDTO.setQuantity(Double.parseDouble(etQuantity.getText().toString()));
                 transactionDTO.setBeneficiary(etBeneficiary.getText().toString());
                 transactionDTO.setConcept(etConcept.getText().toString());
                 transactionDTO.setOriginAccount(preferences.getString("selectedAccount", "false"));
 
-                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                 LocalDateTime now = LocalDateTime.now();
                 transactionDTO.setDatetime(dtf.format(now));
 
@@ -73,17 +81,17 @@ public class AddTransferByAccount extends AppCompatActivity {
                         .build();
 
                 PostService postService = retrofit.create(PostService.class);
-                Call<PaymentTransactionsDTO> call = postService.addTransaction(transactionDTO);
+                Call<Void> call = postService.addTransaction(transactionDTO);
 
-                call.enqueue(new Callback<PaymentTransactionsDTO>() {
+                call.enqueue(new Callback<Void>() {
                     @Override
-                    public void onResponse(Call<PaymentTransactionsDTO> call, Response<PaymentTransactionsDTO> response) {
+                    public void onResponse(Call<Void> call, Response<Void> response) {
                         Toast.makeText(getBaseContext(), "Http Status: " + response.code(), Toast.LENGTH_LONG).show();
                     }
 
                     @Override
-                    public void onFailure(Call<PaymentTransactionsDTO> call, Throwable t) {
-                        Toast.makeText(getBaseContext(), "Http Status: " + t.getCause(), Toast.LENGTH_LONG).show();
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        Toast.makeText(getBaseContext(), "Http Status: " + t.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
             }
