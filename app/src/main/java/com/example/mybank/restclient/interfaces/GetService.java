@@ -2,6 +2,7 @@ package com.example.mybank.restclient.interfaces;
 
 import com.example.mybank.restclient.dto.AccountDTO;
 import com.example.mybank.restclient.dto.PaymentTransactionsDTO;
+import com.example.mybank.restclient.dto.PaymentWayDTO;
 import com.example.mybank.restclient.dto.UserDTO;
 
 import java.util.List;
@@ -20,4 +21,7 @@ public interface GetService {
 
     @GET("/transactions/myaccount")
     Call<List<PaymentTransactionsDTO>> getPaymentTransactions(@Query("userId") String iban);
+
+    @GET("/paymentways/all")
+    Call<List<PaymentWayDTO>> getPaymentWays();
 }

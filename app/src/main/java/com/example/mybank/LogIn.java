@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.hardware.biometrics.BiometricPrompt;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 
 import com.example.mybank.restclient.dto.UserDTO;
 import com.example.mybank.restclient.interfaces.PostService;
@@ -46,11 +48,13 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
     private ImageView btFingerprint;
     private Button login;
     private ProgressDialog progressDialog;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mAuth = FirebaseAuth.getInstance();
 
         etUsername = findViewById(R.id.etUsername);
@@ -67,21 +71,30 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
         progressDialog = new ProgressDialog(this);
 
         if (mAuth.getCurrentUser() != null){
-            login.setText("SignIn");
-            btFingerprint.setVisibility(View.VISIBLE);
-            login.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    signIn();
-                }
-            });
-            btFingerprint.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    fingerprint();
-                }
-            });
-            //fingerprint();
+            if (sharedPreferences.getBoolean("session", false) == true) {
+                progressDialog.setMessage("iniciando sesion...");
+                progressDialog.show();
+                Intent i = new Intent(getApplicationContext(), Main.class);
+                startActivity(i);
+                Toast.makeText(LogIn.this, "sesion iniciada", Toast.LENGTH_LONG).show();
+                progressDialog.dismiss();
+            }else {
+                login.setText("SignIn");
+                btFingerprint.setVisibility(View.VISIBLE);
+                login.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        signIn();
+                    }
+                });
+                btFingerprint.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        fingerprint();
+                    }
+                });
+                //fingerprint();
+            }
         }else{
             login.setText("SignUp");
             etUsername.setVisibility(View.VISIBLE);
@@ -125,7 +138,7 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
     public void signIn(){
         final String password = etPassword.getText().toString().trim();
 
-        if (TextUtils.isEmpty(password)){
+        if (TextUtils.isEmpty(password)) {
             Toast.makeText(this, "contraseña incorrecta", Toast.LENGTH_LONG).show();
             return;
         }
@@ -136,15 +149,14 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
         mAuth.signInWithEmailAndPassword(mAuth.getCurrentUser().getEmail(), password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()){
+                if (task.isSuccessful()) {
                     Intent i = new Intent(getApplicationContext(), Main.class);
                     startActivity(i);
                     Toast.makeText(LogIn.this, "sesion iniciada", Toast.LENGTH_LONG).show();
-                }else{
+                } else {
                     Toast.makeText(LogIn.this, "error al iniciar sesion", Toast.LENGTH_LONG).show();
                 }
-                progressDialog.dismiss();
-            }
+                progressDialog.dismiss();}
         });
     }
 

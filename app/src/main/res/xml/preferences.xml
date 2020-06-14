@@ -3,11 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <SwitchPreferenceCompat
-        app:key="notifications"
-        app:title="Enable message notifications"/>
+        android:id="@+id/session"
+        app:key="session"
+        app:title="Mantener Sesión Iniciada" />
+    <EditTextPreference
+        android:id="@+id/selectedAccount"
+        android:defaultValue="false"
+        android:key="selectedAccount"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="Default Account" />
 
-    <Preference
-        app:key="feedback"
-        app:title="Send feedback"
-        app:summary="Report technical issues or suggest new features"/>
 </PreferenceScreen>

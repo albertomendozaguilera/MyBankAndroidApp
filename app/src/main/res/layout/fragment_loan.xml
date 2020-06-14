@@ -38,7 +38,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView39">
 
             <EditText
-                android:id="@+id/editText"
+                android:id="@+id/etQuantity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -53,7 +53,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="70dp"
+            android:layout_marginTop="50dp"
             android:layout_marginEnd="10dp"
             app:cardCornerRadius="10dp"
             app:cardElevation="10dp"
@@ -62,7 +62,7 @@
             app:layout_constraintTop_toBottomOf="@+id/cardView5">
 
             <EditText
-                android:id="@+id/editText2"
+                android:id="@+id/etMonths"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -80,7 +80,29 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/paymentWaysSpinner" />
+
+        <Spinner
+            android:id="@+id/accountsSpinner"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cardView6" />
+
+        <Spinner
+            android:id="@+id/paymentWaysSpinner"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/accountsSpinner" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

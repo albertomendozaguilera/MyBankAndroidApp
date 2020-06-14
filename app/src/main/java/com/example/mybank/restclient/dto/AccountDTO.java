@@ -1,13 +1,15 @@
 package com.example.mybank.restclient.dto;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class AccountDTO {
+public class AccountDTO implements Serializable {
     private UserDTO userDTO;
     private String iban;
     private String name;
     private double balance;
     private ArrayList<PaymentTransactionsDTO> transactionsDTOList;
+    private ArrayList<LoanDTO> loansList;
 
     public UserDTO getUserDTO() {
         return userDTO;
@@ -47,6 +49,14 @@ public class AccountDTO {
 
     public void setTransactionsDTOList(ArrayList<PaymentTransactionsDTO> transactionsDTOList) {
         this.transactionsDTOList = transactionsDTOList;
+    }
+
+    public ArrayList<LoanDTO> getLoansList() {
+        return loansList;
+    }
+
+    public void setLoansList(ArrayList<LoanDTO> loansList) {
+        this.loansList = loansList;
     }
 
     @Override

@@ -1,7 +1,9 @@
 package com.example.mybank.restclient.dto;
 
 
-public class PaymentTransactionsDTO {
+import java.io.Serializable;
+
+public class PaymentTransactionsDTO implements Serializable {
     String id;
     String iban;
     double quantity;

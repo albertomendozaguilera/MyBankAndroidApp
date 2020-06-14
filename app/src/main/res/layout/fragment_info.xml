@@ -24,94 +24,209 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <TableLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#C9EEFF">
+                android:layout_height="match_parent">
 
-                <TableRow
+                <TableLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:background="#C9EEFF"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                    <TextView
-                        android:id="@+id/tvMonth1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="FEB"
-                        android:textSize="36sp"
-                        android:textStyle="bold|italic" />
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
 
-                    <TextView
-                        android:id="@+id/tvMonth2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="MAR"
-                        android:textSize="36sp"
-                        android:textStyle="bold|italic" />
+                        <TextView
+                            android:id="@+id/tvMonth1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="FEB"
+                            android:textSize="36sp"
+                            android:textStyle="bold|italic" />
 
-                    <TextView
-                        android:id="@+id/tvMonth3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="ABR"
-                        android:textSize="36sp"
-                        android:textStyle="bold|italic" />
+                        <TextView
+                            android:id="@+id/tvMonth2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="MAR"
+                            android:textSize="36sp"
+                            android:textStyle="bold|italic" />
 
-                    <TextView
-                        android:id="@+id/tvMonth4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="MAY"
-                        android:textSize="36sp"
-                        android:textStyle="bold|italic" />
-                </TableRow>
+                        <TextView
+                            android:id="@+id/tvMonth3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="ABR"
+                            android:textSize="36sp"
+                            android:textStyle="bold|italic" />
 
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="49dp" >
+                        <TextView
+                            android:id="@+id/tvMonth4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="MAY"
+                            android:textSize="36sp"
+                            android:textStyle="bold|italic" />
+                    </TableRow>
 
-                    <TextView
-                        android:id="@+id/textView28"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="bottom|center"
-                        android:text="         \n         \n  |        \n  |        \n  |        \n  |       |\n  |       |\n  |       |\n" />
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
 
-                    <TextView
-                        android:id="@+id/textView29"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="bottom|center"
-                        android:text="  |       |\n  |       |\n  |       |\n  |       |\n  |       |\n  |       |\n  |       |\n  |       |\n" />
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
 
-                    <TextView
-                        android:id="@+id/textView30"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="bottom|center"
-                        android:text="           \n           \n          |\n  |       |\n  |       |\n  |       |\n  |       |\n  |       |\n" />
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="#C9EEFF">
 
-                    <TextView
-                        android:id="@+id/textView31"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="bottom|center"
-                        android:text="  |        \n  |        \n  |       |\n  |       |\n  |       |\n  |       |\n  |       |\n  |       |\n" />
-                </TableRow>
+                                <ImageView
+                                    android:id="@+id/month1Inc"
+                                    android:layout_width="15dp"
+                                    android:layout_height="100dp"
+                                    android:layout_marginEnd="20dp"
+                                    android:layout_marginBottom="10dp"
+                                    android:background="#4157FF"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent" />
 
-            </TableLayout>
+                                <ImageView
+                                    android:id="@+id/month1exp"
+                                    android:layout_width="15dp"
+                                    android:layout_height="60dp"
+                                    android:layout_marginStart="20dp"
+                                    android:layout_marginBottom="10dp"
+                                    android:background="#FFD643"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent" />
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="#C9EEFF">
+
+                                <ImageView
+                                    android:id="@+id/month2Inc"
+                                    android:layout_width="15dp"
+                                    android:layout_height="75dp"
+                                    android:layout_marginEnd="20dp"
+                                    android:layout_marginBottom="10dp"
+                                    android:background="#4157FF"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent" />
+
+                                <ImageView
+                                    android:id="@+id/month2exp"
+                                    android:layout_width="15dp"
+                                    android:layout_height="80dp"
+                                    android:layout_marginStart="20dp"
+                                    android:layout_marginBottom="10dp"
+                                    android:background="#FFD643"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent" />
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="#C9EEFF">
+
+                                <ImageView
+                                    android:id="@+id/month3Inc"
+                                    android:layout_width="15dp"
+                                    android:layout_height="40dp"
+                                    android:layout_marginEnd="20dp"
+                                    android:layout_marginBottom="10dp"
+                                    android:background="#4157FF"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent" />
+
+                                <ImageView
+                                    android:id="@+id/month3exp"
+                                    android:layout_width="15dp"
+                                    android:layout_height="100dp"
+                                    android:layout_marginStart="20dp"
+                                    android:layout_marginBottom="10dp"
+                                    android:background="#FFD643"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent" />
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="#C9EEFF">
+
+                                <ImageView
+                                    android:id="@+id/month4Inc"
+                                    android:layout_width="15dp"
+                                    android:layout_height="130dp"
+                                    android:layout_marginEnd="20dp"
+                                    android:layout_marginBottom="10dp"
+                                    android:background="#4157FF"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent" />
+
+                                <ImageView
+                                    android:id="@+id/month4exp"
+                                    android:layout_width="15dp"
+                                    android:layout_height="10dp"
+                                    android:layout_marginStart="20dp"
+                                    android:layout_marginBottom="10dp"
+                                    android:background="#FFD643"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent" />
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+                        </androidx.cardview.widget.CardView>
+
+                    </TableRow>
+
+                </TableLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
@@ -133,12 +248,12 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tvMonth44"
+                    android:id="@+id/tvSelectedMonth"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="#C9EEFF"
                     android:gravity="center|left"
-                    android:text="   MAY"
+                    android:text="MAY"
                     android:textSize="36sp"
                     android:textStyle="bold|italic" />
 
@@ -208,6 +323,7 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
+
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -215,26 +331,39 @@
             android:layout_marginTop="15dp"
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="70dp"
+            app:cardCornerRadius="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cardView3">
 
-            <com.google.android.material.tabs.TabLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
 
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tab_layout"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="INGRESOS" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tabIndicatorColor="#FFDD00"
+                    app:tabMode="scrollable" />
 
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="GASTOS" />
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/pager"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="#C9EEFF"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tab_layout" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            </com.google.android.material.tabs.TabLayout>
         </androidx.cardview.widget.CardView>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
