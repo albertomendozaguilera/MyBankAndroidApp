@@ -15,9 +15,9 @@ public interface PostService {
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
     Call<UserDTO> addUser(@Body UserDTO userDTO);
 
-    @POST("/account/requestloan")
+    @POST("/loans/addloan")
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
-    Call<UserDTO> requestLoan(@Body AccountDTO accountDTO);
+    Call<Void> requestLoan(@Body AccountDTO accountDTO);
 
     @POST("/transactions/addtransaction")
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
