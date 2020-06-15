@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#0B8FBA"
     tools:context=".AddTransferByAccount">
 
     <androidx.cardview.widget.CardView
@@ -13,6 +14,9 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="5dp"
+        app:cardBackgroundColor="#C9EEFF"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvIban">
@@ -21,6 +25,7 @@
             android:id="@+id/etIban"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="#FFC107"
             android:ems="10"
             android:hint="IBAN"
             android:inputType="textPersonName" />
@@ -33,6 +38,9 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="5dp"
+        app:cardBackgroundColor="#C9EEFF"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvQuantity">
@@ -41,6 +49,7 @@
             android:id="@+id/etQuantity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="#FFC107"
             android:ems="10"
             android:hint="CANTIDAD"
             android:inputType="textPersonName" />
@@ -53,6 +62,7 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="50dp"
         android:text="CUENTA"
+        android:textColor="#FFC107"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -63,6 +73,7 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="50dp"
         android:text="CANTIDAD"
+        android:textColor="#FFC107"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView7" />
 
@@ -83,6 +94,7 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="50dp"
         android:text="BENEFICIARIO"
+        android:textColor="#FFC107"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView8" />
 
@@ -93,6 +105,9 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="5dp"
+        app:cardBackgroundColor="#C9EEFF"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvBeneficiary">
@@ -101,6 +116,7 @@
             android:id="@+id/etBeneficiary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="#FFC107"
             android:ems="10"
             android:hint="BENEFICIARIO"
             android:inputType="textPersonName" />
@@ -113,6 +129,7 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="50dp"
         android:text="CONCEPTO"
+        android:textColor="#FFC107"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView9" />
 
@@ -125,6 +142,7 @@
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="10dp"
         android:layout_weight="1"
+        android:backgroundTint="#FFC107"
         android:inputType="textCapSentences|textMultiLine"
         android:maxLength="2000"
         android:maxLines="4"

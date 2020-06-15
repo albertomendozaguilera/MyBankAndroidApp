@@ -3,20 +3,20 @@ package com.example.mybank.restclient.dto;
 import java.util.ArrayList;
 
 public class LoanDTO {
-    private int loanNum;
+    private String loanNum;
     private AccountDTO accountDTO;
     private String date;
     private String description;
     private double quantity;
     private double receiptQuantity;
-    private PaymentWayDTO paymentWay;
+    private String paymentWay;
     private ArrayList<ReceiptDTO> receiptsList;
 
-    public int getLoanNum() {
+    public String getLoanNum() {
         return loanNum;
     }
 
-    public void setLoanNum(int loanNum) {
+    public void setLoanNum(String loanNum) {
         this.loanNum = loanNum;
     }
 
@@ -60,11 +60,11 @@ public class LoanDTO {
         this.receiptQuantity = receiptQuantity;
     }
 
-    public PaymentWayDTO getPaymentWay() {
+    public String getPaymentWay() {
         return paymentWay;
     }
 
-    public void setPaymentWay(PaymentWayDTO paymentWay) {
+    public void setPaymentWay(String paymentWay) {
         this.paymentWay = paymentWay;
     }
 

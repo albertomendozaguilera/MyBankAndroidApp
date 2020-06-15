@@ -49,12 +49,14 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
     private Button login;
     private ProgressDialog progressDialog;
     private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        editor = sharedPreferences.edit();
         mAuth = FirebaseAuth.getInstance();
 
         etUsername = findViewById(R.id.etUsername);
@@ -241,45 +243,19 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
         });
     }
 
-
-
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btLogout:
                 mAuth.signOut();
+                editor.putString("selectedAccount", "false");
+                editor.putBoolean("session", false);
                 Intent i = new Intent(getApplicationContext(), LogIn.class);
                 finish();
                 startActivity(i);
                 break;
         }
     }
-
-//    private void getBankAccountInfos(){
-//        Retrofit retrofit = new Retrofit.Builder()
-//                .baseUrl("http://10.0.2.2:8080")
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .build();
-//
-//        GetService getService = retrofit.create(GetService.class);
-//        Call<AccountDTO> call = getService.getBankAccountInfo("Alberto");
-//
-//        call.enqueue(new Callback<AccountDTO>() {
-//            @Override
-//            public void onResponse(Call<AccountDTO> call, Response<AccountDTO> response) {
-//                    //Toast.makeText(getBaseContext(), response.body().getId(), Toast.LENGTH_LONG).show();
-//                    //Toast.makeText(getBaseContext(), "Nombre: "+response.body().getName(), Toast.LENGTH_LONG).show();
-//                    //Toast.makeText(getBaseContext(), "Dinero: "+String.valueOf(response.body().getMoney()), Toast.LENGTH_LONG).show();
-//
-//            }
-//
-//            @Override
-//            public void onFailure(Call<AccountDTO> call, Throwable t) {
-//                System.out.println(t.getMessage());
-//                System.out.println(t.getMessage());
-//            }
-//        });
-//    }
 
     private void addUserToDatabase(String id, String name, String email){
         UserDTO userDTO = new UserDTO();

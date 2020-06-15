@@ -15,8 +15,8 @@ import com.example.mybank.restclient.dto.UserDTO;
 
 public class TransferFragment extends Fragment {
 
-    UserDTO user;
-    CardView btAccount, btPhone;
+    private UserDTO user;
+    private CardView btAccount, btPhone;
 
     public TransferFragment() {
         // Required empty public constructor
@@ -51,7 +51,7 @@ public class TransferFragment extends Fragment {
         btPhone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent();
+                Intent i = new Intent(getActivity().getApplicationContext(), AddTransferByPhone.class);
                 i.putExtra("user", user);
                 startActivity(i);
             }

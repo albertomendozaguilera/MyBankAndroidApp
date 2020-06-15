@@ -37,7 +37,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener{
     private FragmentManager fm;
     private ArrayList <AccountDTO> accountsList;
     private UserDTO user = new UserDTO();
-    private FirebaseAuth mAuth;
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private UserController userController;
     private PaymentWaysController paymentWaysController;
     private Bundle bundle = new Bundle();
@@ -54,7 +54,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener{
 
         //accountsList = new ArrayList();
 
-        userController.getUserInfo(mAuth, new OnUserInfoResponse() {
+        userController.getUserInfo(mAuth.getUid(), new OnUserInfoResponse() {
             @Override
             public void getUserDTO(UserDTO userDTO) {
                 user = userDTO;
@@ -91,7 +91,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
-        FragmentTransaction ft = fm.beginTransaction();
+        FragmentTransaction ft = fm.beginTransaction().setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
 
         switch (v.getId()){
             case R.id.btHome:
@@ -135,7 +135,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener{
         setButtonsClickListener();
 
         fm = getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
+        FragmentTransaction ft = fm.beginTransaction().setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         ft.replace(R.id.mainFragment, fragmentsList[0]);
         ft.commit();
     }

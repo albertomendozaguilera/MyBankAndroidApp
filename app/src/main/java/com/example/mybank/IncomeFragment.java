@@ -19,10 +19,10 @@ import java.util.ArrayList;
 
 public class IncomeFragment extends Fragment {
 
-    RecyclerView recyclerView;
-    RecyclerAdapter adapter;
+    private RecyclerView recyclerView;
+    private RecyclerAdapter adapter;
     private ArrayList<PaymentTransactionsDTO> transactionsList;
-    UserDTO user;
+    private UserDTO user;
     private int month;
     private int accountId;
     private SharedPreferences preferences;

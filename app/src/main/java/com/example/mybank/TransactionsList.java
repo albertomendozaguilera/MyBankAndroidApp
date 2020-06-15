@@ -22,10 +22,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class TransactionsList extends AppCompatActivity {
 
-    RecyclerView recyclerView;
-    RecyclerAdapter adapter;
-    ArrayList transactionsList;
-    UserDTO user;
+    private RecyclerView recyclerView;
+    private RecyclerAdapter adapter;
+    private ArrayList transactionsList;
+    private UserDTO user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

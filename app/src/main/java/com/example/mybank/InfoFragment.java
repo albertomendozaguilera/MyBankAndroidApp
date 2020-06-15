@@ -43,11 +43,12 @@ public class InfoFragment extends Fragment implements View.OnClickListener {
     private int [] last4Months = {actualMonth, (actualMonth -1), (actualMonth -2), (actualMonth -3)};;
     private UserDTO user;
     private ViewPager2 viewPager;
-    ViewPagerAdapter viewPagerAdapter;
+    private ViewPagerAdapter viewPagerAdapter;
     private TabLayout tabLayout;
-    int accountId;
-    ConstraintLayout layoutForeground;
-    SharedPreferences preferences;
+    TabLayoutMediator tabLayoutMediator;
+    private int accountId;
+    private ConstraintLayout layoutForeground;
+    private SharedPreferences preferences;
     private final int MAXHEIGHT = 250;
     private final int MINHEIGHT = 0;
 
@@ -59,6 +60,12 @@ public class InfoFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null){
+            user = (UserDTO) getArguments().getSerializable("user");
+            preferences = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+            viewPagerAdapter = new ViewPagerAdapter(this, user, selectedMonth);
+            getSelectedAccountId();
+        }
     }
 
     @Override
@@ -68,35 +75,25 @@ public class InfoFragment extends Fragment implements View.OnClickListener {
 
         findViewsById(view);
 
-        if (getArguments() != null){
-            user = (UserDTO) getArguments().getSerializable("user");
-            viewPagerAdapter = new ViewPagerAdapter(this, user, selectedMonth);
-            viewPager.setAdapter(viewPagerAdapter);
-            preferences = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
-            getSelectedAccountId();
-        }
+        viewPager.setAdapter(viewPagerAdapter);
 
-        /*viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                super.onPageScrolled(position, positionOffset, positionOffsetPixels);
-            }
-        });*/
-
-        TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(tabLayout, viewPager,
-                new TabLayoutMediator.TabConfigurationStrategy() {
-                    @Override public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
-                        switch (position){
-                            case 0:
-                                tab.setText("INGRESOS");
-                                break;
-                            case 1:
-                                tab.setText("GASTOS");
-                                break;
+        if (tabLayoutMediator == null) {
+            tabLayoutMediator = new TabLayoutMediator(tabLayout, viewPager,
+                    new TabLayoutMediator.TabConfigurationStrategy() {
+                        @Override
+                        public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
+                            switch (position) {
+                                case 0:
+                                    tab.setText("INGRESOS");
+                                    break;
+                                case 1:
+                                    tab.setText("GASTOS");
+                                    break;
+                            }
                         }
-                    }
-                });
-        tabLayoutMediator.attach();
+                    });
+            tabLayoutMediator.attach();
+        }
 
         if (user.getAccountsList().get(accountId).getTransactionsDTOList().size() != 0) {
             getTransactionsInfo();
@@ -273,7 +270,13 @@ public class InfoFragment extends Fragment implements View.OnClickListener {
         DecimalFormat df = new DecimalFormat("###.##");
         tvIncome.setText(""+income);
         tvExpenses.setText(""+expenses);
-        tvSavings.setText("Has ahorrado: "+df.format(savings));
+        if (savings > 0) {
+            tvSavings.setText("Has ahorrado " + df.format(savings) + "€");
+        }else if(savings < 0){
+            tvSavings.setText("Te has pasado " + df.format(savings) + "€");
+        }else{
+            tvSavings.setText("No has ahorrado nada, pero tampoco te has pasado");
+        }
     }
 
 

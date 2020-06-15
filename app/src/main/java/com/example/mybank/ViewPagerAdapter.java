@@ -16,9 +16,9 @@ import java.util.List;
 
 public class ViewPagerAdapter extends FragmentStateAdapter {
 
-    UserDTO user;
-    int month;
-    Bundle bundle = new Bundle();
+    private UserDTO user;
+    private int month;
+    private Bundle bundle = new Bundle();
 
     public ViewPagerAdapter(@NonNull Fragment fragment, UserDTO user, int month) {
         super(fragment);

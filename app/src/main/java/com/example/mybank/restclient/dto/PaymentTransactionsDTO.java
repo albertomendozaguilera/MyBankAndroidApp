@@ -4,14 +4,14 @@ package com.example.mybank.restclient.dto;
 import java.io.Serializable;
 
 public class PaymentTransactionsDTO implements Serializable {
-    String id;
-    AccountDTO accountDTO;
-    double quantity;
-    String concept;
-    String datetime;
-    String destinyAccount;
-    String originAccount;
-    String beneficiary;
+    private String id;
+    private AccountDTO accountDTO;
+    private double quantity;
+    private String concept;
+    private String datetime;
+    private String destinyAccount;
+    private String originAccount;
+    private String beneficiary;
 
     public String getId() {
         return id;

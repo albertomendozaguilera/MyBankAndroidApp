@@ -3,7 +3,6 @@ package com.example.mybank.restclient.controllers;
 import com.example.mybank.restclient.dto.UserDTO;
 import com.example.mybank.restclient.interfaces.GetService;
 import com.example.mybank.restclient.interfaces.OnUserInfoResponse;
-import com.google.firebase.auth.FirebaseAuth;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -13,8 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class UserController {
 
-    public void getUserInfo(FirebaseAuth mAuth, final OnUserInfoResponse callback){
-        mAuth = FirebaseAuth.getInstance();
+    public void getUserInfo(String id, final OnUserInfoResponse callback){
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://10.0.2.2:8080")
@@ -22,7 +20,7 @@ public class UserController {
                 .build();
 
         GetService getService = retrofit.create(GetService.class);
-        Call<UserDTO> call = getService.getUserFromId(mAuth.getUid());
+        Call<UserDTO> call = getService.getUserFromId(id);
 
         call.enqueue(new Callback<UserDTO>() {
             @Override

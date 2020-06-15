@@ -13,9 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AddTransferByAccount"></activity>
+        <activity android:name=".AddTransferByPhone"></activity>
+        <activity android:name=".AddTransferByAccount" />
         <activity android:name=".PreferencesActivity" />
-        <activity android:name=".SplashActiviy" />
         <activity android:name=".TransactionsList" />
         <activity android:name=".Main" />
         <activity android:name=".LogIn">

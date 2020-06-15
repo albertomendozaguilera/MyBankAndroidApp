@@ -3,6 +3,7 @@ package com.example.mybank;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,11 +28,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class AddTransferByAccount extends AppCompatActivity {
 
-    UserDTO user;
-    int accountId;
-    SharedPreferences preferences;
-    EditText etIban, etQuantity, etBeneficiary, etConcept;
-    Button btAddTransaction;
+    private UserDTO user;
+    private int accountId;
+    private SharedPreferences preferences;
+    private EditText etIban, etQuantity, etBeneficiary, etConcept;
+    private Button btAddTransaction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,50 +63,67 @@ public class AddTransferByAccount extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
-                PaymentTransactionsDTO transactionDTO = new PaymentTransactionsDTO();
-                transactionDTO.setId(null);
-                transactionDTO.setAccountDTO(user.getAccountsList().get(accountId));
-                transactionDTO.setDestinyAccount(etIban.getText().toString());
-                transactionDTO.setQuantity(Double.parseDouble(etQuantity.getText().toString()));
-                transactionDTO.setBeneficiary(etBeneficiary.getText().toString());
-                transactionDTO.setConcept(etConcept.getText().toString());
-                transactionDTO.setOriginAccount(preferences.getString("selectedAccount", "false"));
-
-                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                LocalDateTime now = LocalDateTime.now();
-                transactionDTO.setDatetime(dtf.format(now));
-
-                Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl("http://10.0.2.2:8080")
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .build();
-
-                PostService postService = retrofit.create(PostService.class);
-                Call<Void> call = postService.addTransaction(transactionDTO);
-
-                call.enqueue(new Callback<Void>() {
-                    @Override
-                    public void onResponse(Call<Void> call, Response<Void> response) {
-                        Toast.makeText(getBaseContext(), "Http Status: " + response.code(), Toast.LENGTH_LONG).show();
-                    }
-
-                    @Override
-                    public void onFailure(Call<Void> call, Throwable t) {
-                        Toast.makeText(getBaseContext(), "Http Status: " + t.getMessage(), Toast.LENGTH_LONG).show();
-                    }
-                });
+                if (checkFields()) {
+                    addUser();
+                }
             }
         });
     }
 
-    private int getLastTransaction(){
-        int lastTransaction = 0;
-        for (PaymentTransactionsDTO transaction : user.getAccountsList().get(accountId).getTransactionsDTOList()){
-            if (Integer.parseInt(transaction.getId()) > lastTransaction){
-                lastTransaction = Integer.parseInt(transaction.getId());
-            }
+    private boolean checkFields(){
+        if (TextUtils.isEmpty(etIban.getText())){
+            Toast.makeText(this, "Debes introducir un iban", Toast.LENGTH_LONG).show();
+            return false;
         }
-        return lastTransaction;
+        if (TextUtils.isEmpty(etQuantity.getText())){
+            Toast.makeText(this, "Debes introducir una cantidad", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if (TextUtils.isEmpty(etConcept.getText())){
+            Toast.makeText(this, "Debes introducir un concepto", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if (TextUtils.isEmpty(etBeneficiary.getText())){
+            Toast.makeText(this, "Debes introducir un beneficiario", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void addUser(){
+        PaymentTransactionsDTO transactionDTO = new PaymentTransactionsDTO();
+        transactionDTO.setId(null);
+        transactionDTO.setAccountDTO(user.getAccountsList().get(accountId));
+        transactionDTO.setDestinyAccount(etIban.getText().toString());
+        transactionDTO.setQuantity(Double.parseDouble(etQuantity.getText().toString()));
+        transactionDTO.setBeneficiary(etBeneficiary.getText().toString());
+        transactionDTO.setConcept(etConcept.getText().toString());
+        transactionDTO.setOriginAccount(preferences.getString("selectedAccount", "false"));
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDateTime now = LocalDateTime.now();
+        transactionDTO.setDatetime(dtf.format(now));
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://10.0.2.2:8080")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        PostService postService = retrofit.create(PostService.class);
+        Call<Void> call = postService.addTransaction(transactionDTO);
+
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                Toast.makeText(getBaseContext(), "Http Status: " + response.code(), Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Toast.makeText(getBaseContext(), "Http Status: " + t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     private void getSelectedAccountId() {

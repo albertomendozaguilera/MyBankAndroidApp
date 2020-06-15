@@ -15,7 +15,7 @@
             android:id="@+id/textView39"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="70dp"
             android:text="SOLICITAR PRÉSTAMO"
             android:textSize="30sp"
             android:textStyle="bold"
@@ -28,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="50dp"
             android:layout_marginEnd="10dp"
             android:background="#C9EEFF"
             app:cardCornerRadius="10dp"
@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:backgroundTint="#C9EEFF"
+                android:backgroundTint="#FFEB3B"
                 android:hint="IMPORTE"
                 android:inputType="textPersonName" />
         </androidx.cardview.widget.CardView>
@@ -67,7 +67,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:backgroundTint="#C9EEFF"
+                android:backgroundTint="#FFEB3B"
                 android:hint="MESES"
                 android:inputType="textPersonName" />
         </androidx.cardview.widget.CardView>
@@ -91,7 +91,7 @@
             android:layout_marginEnd="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardView6" />
+            app:layout_constraintTop_toBottomOf="@+id/cardView13" />
 
         <Spinner
             android:id="@+id/paymentWaysSpinner"
@@ -103,6 +103,27 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/accountsSpinner" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView13"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView6">
+
+            <EditText
+                android:id="@+id/etConcept"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#FFEB3B"
+                android:ems="10"
+                android:hint="CONCEPTO"
+                android:inputType="textPersonName" />
+        </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

@@ -26,14 +26,14 @@ import com.example.mybank.restclient.dto.UserDTO;
 
 public class HomeFragment extends Fragment {
 
-    UserDTO user;
-    TableLayout tl;
-    TextView balance, seeAll;
-    ConstraintLayout l;
-    Button btSettings, btAccounts;
-    int accountId;
-    SharedPreferences preferences;
-    SharedPreferences.Editor editor;
+    private UserDTO user;
+    private TableLayout tl;
+    private TextView balance, seeAll;
+    private ConstraintLayout l;
+    private Button btSettings, btAccounts;
+    private int accountId;
+    private SharedPreferences preferences;
+    private SharedPreferences.Editor editor;
 
     public HomeFragment() {
         // Required empty public constructor

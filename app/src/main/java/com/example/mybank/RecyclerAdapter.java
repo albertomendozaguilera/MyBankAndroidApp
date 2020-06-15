@@ -14,8 +14,8 @@ import com.example.mybank.restclient.dto.PaymentTransactionsDTO;
 import java.util.ArrayList;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> implements View.OnClickListener{
-    ArrayList<PaymentTransactionsDTO> transactionsList;
-    Context context;
+    private ArrayList<PaymentTransactionsDTO> transactionsList;
+    private Context context;
     private View.OnClickListener listener;
 
     public RecyclerAdapter(ArrayList <PaymentTransactionsDTO> transactionsList, Context context) {

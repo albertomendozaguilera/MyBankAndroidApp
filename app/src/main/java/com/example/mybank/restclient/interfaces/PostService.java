@@ -1,6 +1,7 @@
 package com.example.mybank.restclient.interfaces;
 
 import com.example.mybank.restclient.dto.AccountDTO;
+import com.example.mybank.restclient.dto.LoanDTO;
 import com.example.mybank.restclient.dto.PaymentTransactionsDTO;
 import com.example.mybank.restclient.dto.UserDTO;
 
@@ -17,7 +18,7 @@ public interface PostService {
 
     @POST("/loans/addloan")
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
-    Call<Void> requestLoan(@Body AccountDTO accountDTO);
+    Call<Void> requestLoan(@Body LoanDTO loanDTO);
 
     @POST("/transactions/addtransaction")
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
