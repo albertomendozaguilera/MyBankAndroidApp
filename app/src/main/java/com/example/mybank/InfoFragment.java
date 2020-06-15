@@ -12,21 +12,16 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
-import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.example.mybank.restclient.controllers.PaymentWaysController;
 import com.example.mybank.restclient.dto.PaymentTransactionsDTO;
-import com.example.mybank.restclient.dto.PaymentWayDTO;
 import com.example.mybank.restclient.dto.UserDTO;
-import com.example.mybank.restclient.interfaces.OnPaymentWaysResponse;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 
 public class InfoFragment extends Fragment implements View.OnClickListener {
@@ -76,8 +71,9 @@ public class InfoFragment extends Fragment implements View.OnClickListener {
         findViewsById(view);
 
         viewPager.setAdapter(viewPagerAdapter);
+        viewPager.setSaveEnabled(false);
 
-        if (tabLayoutMediator == null) {
+
             tabLayoutMediator = new TabLayoutMediator(tabLayout, viewPager,
                     new TabLayoutMediator.TabConfigurationStrategy() {
                         @Override
@@ -93,7 +89,7 @@ public class InfoFragment extends Fragment implements View.OnClickListener {
                         }
                     });
             tabLayoutMediator.attach();
-        }
+
 
         if (user.getAccountsList().get(accountId).getTransactionsDTOList().size() != 0) {
             getTransactionsInfo();
