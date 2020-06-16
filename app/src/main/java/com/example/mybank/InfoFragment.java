@@ -267,11 +267,11 @@ public class InfoFragment extends Fragment implements View.OnClickListener {
         tvIncome.setText(""+income);
         tvExpenses.setText(""+expenses);
         if (savings > 0) {
-            tvSavings.setText("Has ahorrado  + df.format(savings) + "€");
+            tvSavings.setText(getResources().getString(R.string.tv_saving) + savings + "€");
         }else if(savings < 0){
-            tvSavings.setText("Te has pasado  + df.format(savings) + "€");
+            tvSavings.setText(getResources().getString(R.string.tv_overcost) + expenses + "€");
         }else{
-            tvSavings.setText( has ahorrado nada, pero tampoco te has pasado");
+            tvSavings.setText(getResources().getString(R.string.tv_saving));
         }
     }
 

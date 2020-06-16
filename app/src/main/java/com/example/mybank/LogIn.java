@@ -91,7 +91,7 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
 
         if (mAuth.getCurrentUser() != null){
             if (sharedPreferences.getBoolean("session", false) == true) {
-                progressDialog.setMessage(R.string.loging_in);
+                progressDialog.setMessage(getResources().getString(R.string.loging_in));
                 progressDialog.show();
                 Intent i = new Intent(getApplicationContext(), Main.class);
                 startActivity(i);
@@ -99,13 +99,6 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
             }else {
                 login.setText(R.string.bt_signin);
                 btFingerprint.setVisibility(View.VISIBLE);
-                /*login.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        cardLogin.setElevation(2);
-                        signIn();
-                    }
-                });*/
                 login.setOnTouchListener(new View.OnTouchListener() {
                     @Override
                     public boolean onTouch(View v, MotionEvent event) {
@@ -136,13 +129,6 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
             login.setText(R.string.bt_signup);
             etUsername.setVisibility(View.VISIBLE);
             etEmail.setVisibility(View.VISIBLE);
-            /*login.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    cardLogin.setElevation(2);
-                    signUp();
-                }
-            });*/
             login.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
@@ -173,8 +159,8 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
 
         if (Build.VERSION.SDK_INT >= 28) {
             final BiometricPrompt bp = new BiometricPrompt.Builder(this)
-                    .setTitle(R.string.fingerprint)
-                    .setNegativeButton(R.string.cancel, executor, new DialogInterface.OnClickListener() {
+                    .setTitle(getResources().getString(R.string.fingerprint))
+                    .setNegativeButton(getResources().getString(R.string.cancel), executor, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                         }
@@ -199,7 +185,7 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
             return;
         }
 
-        progressDialog.setMessage(R.string.loging_in);
+        progressDialog.setMessage(getResources().getString(R.string.loging_in));
         progressDialog.show();
 
         mAuth.signInWithEmailAndPassword(mAuth.getCurrentUser().getEmail(), password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -234,7 +220,7 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
             return;
         }
 
-        progressDialog.setMessage(R.string.loging_in);
+        progressDialog.setMessage(getResources().getString(R.string.loging_in));
         progressDialog.show();
         //intenta iniciar sesion
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -251,7 +237,7 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
                                 .setTitle(R.string.user_not_exist);
                         builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                progressDialog.setMessage(R.string.check_in);
+                                progressDialog.setMessage(getResources().getString(R.string.check_in));
                                 progressDialog.show();
 
                                 mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(LogIn.this, new OnCompleteListener<AuthResult>() {

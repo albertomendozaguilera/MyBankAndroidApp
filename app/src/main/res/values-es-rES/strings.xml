@@ -39,7 +39,7 @@
     <string name="bt_settings">ajustes</string>
     <string name="tv_seeall">ver todos</string>
     <string name="tv_incomes">INGRESOS</string>
-    <string name="tv_saving">Has ahorrado</string>
+    <string name="tv_saving">Has ahorrado:</string>
     <string name="tv_expenses">EXPENSES</string>
     <string name="error_try_later">Algo ha ido mal, intentalo de nuevo mas tarde</string>
     <string name="request_loan">SOLICITAR PRESTAMO</string>
@@ -54,4 +54,6 @@
     <string name="description">DESCRIPCCIÓN</string>
     <string name="add_phone">" + añadir telefono"</string>
     <string name="add_address">" + añadir direccion"</string>
+    <string name="tv_overcost">Te has pasado:</string>
+    <string name="tv_none_saving_overcost">No has ahorrado nada</string>
 </resources>

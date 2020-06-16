@@ -49,6 +49,8 @@
     <string name="tv_seeall">See All</string>
     <string name="tv_incomes">INCOMES</string>
     <string name="tv_saving">You have saved:</string>
+    <string name="tv_overcost">Overcost:</string>
+    <string name="tv_none_saving_overcost">you have not saved anything</string>
     <string name="tv_expenses">EXPENSES</string>
     <string name="error_try_later">Ups, something went wrong, try it later</string>
     <string name="request_loan">REQUEST LOAN</string>
