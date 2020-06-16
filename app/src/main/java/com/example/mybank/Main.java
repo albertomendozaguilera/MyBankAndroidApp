@@ -1,6 +1,8 @@
 package com.example.mybank;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -12,11 +14,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.menu.MenuBuilder;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.preference.PreferenceManager;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.mybank.restclient.controllers.PaymentWaysController;
 import com.example.mybank.restclient.controllers.UserController;
 import com.example.mybank.restclient.dto.AccountDTO;
@@ -33,7 +37,7 @@ import java.util.List;
 public class Main extends AppCompatActivity implements View.OnClickListener{
 
     private Fragment[] fragmentsList;
-    private Button btHome, btInfo, btLoan, btTransfer, btUser;
+    private LottieAnimationView loadingView, btHome, btInfo, btLoan, btTransfer, btUser;
     private FragmentManager fm;
     private ArrayList <AccountDTO> accountsList;
     private UserDTO user = new UserDTO();
@@ -41,16 +45,21 @@ public class Main extends AppCompatActivity implements View.OnClickListener{
     private UserController userController;
     private PaymentWaysController paymentWaysController;
     private Bundle bundle = new Bundle();
+    private final Handler handler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        loadingView = findViewById(R.id.loadingView);
+        loadingView.bringToFront();
+        loadingView.playAnimation();
+
 
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 
         userController = new UserController();
-
-        setContentView(R.layout.activity_main);
 
         //accountsList = new ArrayList();
 
@@ -59,18 +68,32 @@ public class Main extends AppCompatActivity implements View.OnClickListener{
             public void getUserDTO(UserDTO userDTO) {
                 user = userDTO;
                 createViewWithFragments();
+                loadingView.setRepeatCount(0);
+                loadingView.setVisibility(View.INVISIBLE);
             }
 
             @Override
             public void onError(Throwable t) {
-                Toast.makeText(getApplicationContext(), " los servicios se encuentran en mantenimiento en estos momentos, intentelo de nuevo mas tarde", Toast.LENGTH_LONG).show();
                 System.out.println(t.getMessage());
+                loadingView.setAnimation(R.raw.error_in_cloud);
+                loadingView.setRepeatCount(1);
+                loadingView.playAnimation();
+                Toast.makeText(getApplicationContext(), " los servicios se encuentran en mantenimiento en estos momentos, intentelo de nuevo mas tarde", Toast.LENGTH_LONG).show();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        finishActivity();
+                    }
+                }, 5000);
             }
         });
-
-
     }
 
+    private void finishActivity (){
+        Intent i = new Intent(getApplicationContext(), LogIn.class);
+        this.finish();
+        startActivity(i);
+    }
 
     /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -95,23 +118,27 @@ public class Main extends AppCompatActivity implements View.OnClickListener{
 
         switch (v.getId()){
             case R.id.btHome:
+                btHome.playAnimation();
                 ft.replace(R.id.mainFragment, fragmentsList[0]);
                 ft.commit();
                 break;
             case R.id.btInfo:
-                fragmentsList[1].setArguments(bundle);
+                btInfo.playAnimation();
                 ft.replace(R.id.mainFragment, fragmentsList[1]);
                 ft.commit();
                 break;
             case R.id.btLoan:
+                btLoan.playAnimation();
                 ft.replace(R.id.mainFragment, fragmentsList[2]);
                 ft.commit();
                 break;
             case R.id.btTransfer:
+                btTransfer.playAnimation();
                 ft.replace(R.id.mainFragment, fragmentsList[3]);
                 ft.commit();
                 break;
             case R.id.btUser:
+                btUser.playAnimation();
                 ft.replace(R.id.mainFragment, fragmentsList[4]);
                 ft.commit();
                 break;
@@ -162,7 +189,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener{
         fragmentsList[0] = new HomeFragment();
         fragmentsList[0].setArguments(bundle);
         fragmentsList[1] = new InfoFragment();
-
+        fragmentsList[1].setArguments(bundle);
         fragmentsList[2] = new LoanFragment();
         fragmentsList[2].setArguments(bundle);
         fragmentsList[3] = new TransferFragment();

@@ -7,6 +7,46 @@
     android:background="#0B8FBA"
     tools:context=".LogIn">
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/authenticationSuccess"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#0B8FBA"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="false"
+        app:lottie_loop="false"
+        app:lottie_rawRes="@raw/autentication_success" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardBankLogo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="100dp"
+        app:cardCornerRadius="200dp"
+        app:cardElevation="50dp"
+        app:layout_constraintBottom_toTopOf="@+id/authenticationSuccess"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/bankLogo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FFEB3B"
+            android:backgroundTint="#FFEB3B"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/bank_logo" />
+
+    </androidx.cardview.widget.CardView>
+
     <EditText
         android:id="@+id/etEmail"
         android:layout_width="wrap_content"
@@ -14,7 +54,7 @@
         android:layout_marginTop="50dp"
         android:backgroundTint="#FFC107"
         android:ems="10"
-        android:hint="email"
+        android:hint="@string/hint_email"
         android:inputType="textPersonName"
         android:textColor="#FFC107"
         app:layout_constraintEnd_toEndOf="parent"
@@ -28,7 +68,7 @@
         android:layout_marginTop="50dp"
         android:backgroundTint="#FFC107"
         android:ems="10"
-        android:hint="password"
+        android:hint="@string/hint_password"
         android:inputType="textPersonName"
         android:textColor="#FFC107"
         app:layout_constraintEnd_toEndOf="parent"
@@ -52,7 +92,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="40dp"
         android:layout_marginBottom="30dp"
-        android:text="LogOut"
+        android:text="@string/bt_logout"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -62,7 +102,10 @@
         android:id="@+id/btLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
+        android:background="@drawable/custom_button_pressed"
+        android:text="@string/bt_signup"
+        android:textColor="#0B8FBA"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -75,7 +118,7 @@
         android:layout_marginTop="100dp"
         android:backgroundTint="#FFC107"
         android:ems="10"
-        android:hint="username"
+        android:hint="@string/hint_username"
         android:inputType="textPersonName"
         android:textColor="#FFC107"
         app:layout_constraintEnd_toEndOf="parent"

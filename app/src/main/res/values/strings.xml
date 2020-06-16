@@ -20,4 +20,47 @@
     <string name="attachment_summary_on">Automatically download attachments for incoming emails
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
+
+    <string name="hint_username">username</string>
+    <string name="hint_email">email</string>
+    <string name="hint_password">password</string>
+    <string name="bt_signup">Sign Up</string>
+    <string name="bt_signin">Sign In</string>
+    <string name="bt_logout">Log Out</string>
+    <string name="loging_in">Loging In</string>
+    <string name="loging_in_succeed">Loging In Succeed</string>
+    <string name="fingerprint">fingerprint</string>
+    <string name="wrong_password">wrong password</string>
+    <string name="error_loging_in">error loging in</string>
+    <string name="enter_username">should enter a username</string>
+    <string name="enter_password">should enter your password</string>
+    <string name="enter_email">should enter an email</string>
+    <string name="enter_concept">should enter a concept</string>
+    <string name="enter_quantity">should enter a quantity</string>
+    <string name="user_not_exist">user does not exist</string>
+    <string name="new_user">create new user?</string>
+    <string name="yes">YES</string>
+    <string name="no">NO</string>
+    <string name="check_in">checking in</string>
+    <string name="user_already_exist">user already exist</string>
+    <string name="cancel">Cancel</string>
+    <string name="tv_your_balance">Your balance:</string>
+    <string name="bt_settings">settings</string>
+    <string name="tv_seeall">See All</string>
+    <string name="tv_incomes">INCOMES</string>
+    <string name="tv_saving">You have saved:</string>
+    <string name="tv_expenses">EXPENSES</string>
+    <string name="error_try_later">Ups, something went wrong, try it later</string>
+    <string name="request_loan">REQUEST LOAN</string>
+    <string name="transfer">TRANSFER</string>
+    <string name="account">ACCOUNT</string>
+    <string name="phone">PHONE</string>
+    <string name="bt_seeall">See All</string>
+    <string name="quantity">QUANTITY</string>
+    <string name="beneficiary">BENEFICIARY</string>
+    <string name="concept">CONCEPT</string>
+    <string name="send">SEND</string>
+    <string name="description">DESCRIPTION</string>
+    <string name="add_phone"> + Add Phone</string>
+    <string name="add_address"> + Add Address</string>
 </resources>

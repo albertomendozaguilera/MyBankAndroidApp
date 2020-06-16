@@ -6,9 +6,11 @@ import androidx.preference.PreferenceManager;
 
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -68,12 +70,33 @@ public class AddTransferByPhone extends AppCompatActivity {
         etQuantity = findViewById(R.id.etQuantity);
         etConcept = findViewById(R.id.etConcept);
         btAddTransactionByPhone = findViewById(R.id.btAddTransactionByPhone);
-        btAddTransactionByPhone.setOnClickListener(new View.OnClickListener() {
+        /*btAddTransactionByPhone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (checkFields()) {
                     checkUser();
                 }
+            }
+        });*/
+        btAddTransactionByPhone.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN: {
+                        btAddTransactionByPhone.setBackgroundResource(R.drawable.custom_button);
+                        btAddTransactionByPhone.setTextColor(Color.parseColor("#FFC107"));
+                        break;
+                    }
+                    case MotionEvent.ACTION_UP: {
+                        btAddTransactionByPhone.setBackgroundResource(R.drawable.custom_button_pressed);
+                        btAddTransactionByPhone.setTextColor(Color.parseColor("#0B8FBA"));
+                        if (checkFields()) {
+                            checkUser();
+                        }
+                        break;
+                    }
+                }
+                return false;
             }
         });
     }

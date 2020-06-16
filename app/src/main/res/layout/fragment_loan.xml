@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="70dp"
-            android:text="SOLICITAR PRÉSTAMO"
+            android:text="@string/request_loan"
             android:textSize="30sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -72,15 +72,18 @@
                 android:inputType="textPersonName" />
         </androidx.cardview.widget.CardView>
 
-        <Button
-            android:id="@+id/btSolicitar"
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/loadingAnimation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="SOLICITAR"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/paymentWaysSpinner" />
+            app:layout_constraintTop_toBottomOf="@+id/paymentWaysSpinner"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="false"
+            app:lottie_rawRes="@raw/payment_processed"/>
+
 
         <Spinner
             android:id="@+id/accountsSpinner"
@@ -89,6 +92,8 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="50dp"
             android:layout_marginEnd="10dp"
+            android:textSize="20sp"
+            android:textColor="#FFEB3B"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cardView13" />
@@ -100,6 +105,8 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="50dp"
             android:layout_marginEnd="10dp"
+            android:textSize="20sp"
+            android:textColor="#FFEB3B"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/accountsSpinner" />
@@ -124,6 +131,19 @@
                 android:hint="CONCEPTO"
                 android:inputType="textPersonName" />
         </androidx.cardview.widget.CardView>
+
+        <Button
+            android:id="@+id/btRequest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_button_pressed"
+            android:text="Solicitar"
+            android:textColor="#0B8FBA"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toBottomOf="@+id/loadingAnimation"
+            app:layout_constraintEnd_toEndOf="@+id/loadingAnimation"
+            app:layout_constraintStart_toStartOf="@+id/loadingAnimation"
+            app:layout_constraintTop_toTopOf="@+id/loadingAnimation" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

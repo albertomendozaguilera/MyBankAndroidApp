@@ -1,9 +1,11 @@
 package com.example.mybank;
 
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -59,13 +61,35 @@ public class AddTransferByAccount extends AppCompatActivity {
         etBeneficiary = findViewById(R.id.etBeneficiary);
         etConcept = findViewById(R.id.etConcept);
         btAddTransaction = findViewById(R.id.btAddTransaction);
-        btAddTransaction.setOnClickListener(new View.OnClickListener() {
+        /*btAddTransaction.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
                 if (checkFields()) {
                     addUser();
                 }
+            }
+        });*/
+        btAddTransaction.setOnTouchListener(new View.OnTouchListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN: {
+                        btAddTransaction.setBackgroundResource(R.drawable.custom_button);
+                        btAddTransaction.setTextColor(Color.parseColor("#FFC107"));
+                        break;
+                    }
+                    case MotionEvent.ACTION_UP: {
+                        btAddTransaction.setBackgroundResource(R.drawable.custom_button_pressed);
+                        btAddTransaction.setTextColor(Color.parseColor("#0B8FBA"));
+                        if (checkFields()) {
+                            addUser();
+                        }
+                        break;
+                    }
+                }
+                return false;
             }
         });
     }

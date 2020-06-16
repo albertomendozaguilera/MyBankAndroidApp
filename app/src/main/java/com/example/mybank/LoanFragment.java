@@ -1,10 +1,12 @@
 package com.example.mybank;
 
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -17,6 +19,8 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 
+import com.airbnb.lottie.LottieAnimationView;
+import com.airbnb.lottie.LottieDrawable;
 import com.example.mybank.restclient.controllers.PaymentWaysController;
 import com.example.mybank.restclient.dto.AccountDTO;
 import com.example.mybank.restclient.dto.LoanDTO;
@@ -40,7 +44,8 @@ public class LoanFragment extends Fragment {
 
     private EditText etQuantity, etMonths, etConcept;
     private Spinner accountsSpinner, paymentWaysSpinner;
-    private Button btSolicitar;
+    private Button btRequest;
+    private LottieAnimationView loadingAnimation;
     private UserDTO user;
     private ArrayList<String> accountsIban, paymentWaysDescription;
     private PaymentWaysController paymentWaysController;
@@ -78,13 +83,42 @@ public class LoanFragment extends Fragment {
         etConcept = view.findViewById(R.id.etConcept);
         accountsSpinner = view.findViewById(R.id.accountsSpinner);
         paymentWaysSpinner = view.findViewById(R.id.paymentWaysSpinner);
-        btSolicitar = view.findViewById(R.id.btSolicitar);
-        btSolicitar.setOnClickListener(new View.OnClickListener() {
+        loadingAnimation = view.findViewById(R.id.loadingAnimation);
+        btRequest = view.findViewById(R.id.btRequest);
+        /*btRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                btRequest.setVisibility(View.INVISIBLE);
+                loadingAnimation.playAnimation();
+                loadingAnimation.setRepeatCount(LottieDrawable.INFINITE);
                 addLoan(paymentWaysDescription.get(paymentWaysSpinner.getSelectedItemPosition()));
             }
+        });*/
+
+        btRequest.setOnTouchListener(new View.OnTouchListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN: {
+                        btRequest.setBackgroundResource(R.drawable.custom_button);
+                        btRequest.setTextColor(Color.parseColor("#FFC107"));
+                        break;
+                    }
+                    case MotionEvent.ACTION_UP: {
+                        btRequest.setBackgroundResource(R.drawable.custom_button_pressed);
+                        btRequest.setTextColor(Color.parseColor("#0B8FBA"));
+                        btRequest.setVisibility(View.INVISIBLE);
+                        loadingAnimation.playAnimation();
+                        loadingAnimation.setRepeatCount(LottieDrawable.INFINITE);
+                        addLoan(paymentWaysDescription.get(paymentWaysSpinner.getSelectedItemPosition()));
+                        break;
+                    }
+                }
+                return false;
+            }
         });
+
         paymentWayDTOSOUT = new ArrayList();
         getPaymentWays(paymentWaysController);
         ArrayAdapter<String> accountsAdapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), R.layout.support_simple_spinner_dropdown_item, accountsIban);
@@ -127,7 +161,7 @@ public class LoanFragment extends Fragment {
                 getSelectedAccountId();
 
                 if (checkFields()){
-                        String concept = etConcept.getText().toString();
+                    String concept = etConcept.getText().toString();
                     double quantity = Double.parseDouble(etQuantity.getText().toString());
 
                     for (PaymentWayDTO paymentWayDTOItem : paymentWayDTOS) {
@@ -139,6 +173,8 @@ public class LoanFragment extends Fragment {
                             accountUser.setEmail(user.getEmail());
                             accountUser.setId(user.getId());
                             accountUser.setName(user.getName());
+
+                            getSelectedAccountId();
 
                             user.getAccountsList().get(accountId).setUserDTO(accountUser);
 
@@ -169,12 +205,19 @@ public class LoanFragment extends Fragment {
                             call.enqueue(new Callback<Void>() {
                                 @Override
                                 public void onResponse(Call<Void> call, Response<Void> response) {
-                                    Toast.makeText(getActivity().getApplicationContext(), "Http Status: " + response.code(), Toast.LENGTH_LONG).show();
+                                    loadingAnimation.setAnimation(R.raw.check_ok);
+                                    loadingAnimation.setRepeatCount(0);
+                                    loadingAnimation.playAnimation();
+                                    System.out.println("Http Status: " + response.code());
                                 }
 
                                 @Override
                                 public void onFailure(Call<Void> call, Throwable t) {
-                                    Toast.makeText(getActivity().getApplicationContext(), "Http Status: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                                    loadingAnimation.setAnimation(R.raw.error);
+                                    loadingAnimation.setRepeatCount(0);
+                                    loadingAnimation.playAnimation();
+                                    Toast.makeText(getActivity().getApplicationContext(), R.string.error_try_later, Toast.LENGTH_LONG).show();
+                                    System.out.println("Http Status: " + t.getMessage());
                                 }
                             });
                         }
@@ -195,11 +238,11 @@ public class LoanFragment extends Fragment {
 
     private boolean checkFields(){
         if (TextUtils.isEmpty(etConcept.getText())){
-            Toast.makeText(getActivity().getApplicationContext(), "Debes introducir un iban", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity().getApplicationContext(), R.string.enter_concept, Toast.LENGTH_LONG).show();
             return false;
         }
         if (TextUtils.isEmpty(etQuantity.getText())){
-            Toast.makeText(getActivity().getApplicationContext(), "Debes introducir una cantidad", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity().getApplicationContext(), R.string.enter_quantity, Toast.LENGTH_LONG).show();
             return false;
         }
         return true;
@@ -207,7 +250,7 @@ public class LoanFragment extends Fragment {
 
     private void getSelectedAccountId() {
         for (accountId = 0; accountId < user.getAccountsList().size(); accountId++){
-            if (preferences.getString("selectedAccount", "false").equals(user.getAccountsList().get(accountId).getIban())){
+            if (accountsSpinner.getSelectedItem().equals(user.getAccountsList().get(accountId).getIban())){
                 break;
             }
         }

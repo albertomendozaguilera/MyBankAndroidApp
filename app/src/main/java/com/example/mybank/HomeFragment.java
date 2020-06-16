@@ -20,6 +20,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.mybank.restclient.dto.AccountDTO;
 import com.example.mybank.restclient.dto.PaymentTransactionsDTO;
 import com.example.mybank.restclient.dto.UserDTO;
@@ -30,7 +31,7 @@ public class HomeFragment extends Fragment {
     private TableLayout tl;
     private TextView balance, seeAll;
     private ConstraintLayout l;
-    private Button btSettings, btAccounts;
+    private LottieAnimationView btSettings, btAccounts;
     private int accountId;
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
@@ -87,6 +88,7 @@ public class HomeFragment extends Fragment {
         btSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                btSettings.playAnimation();
                 showPopupSettings(btSettings);
             }
         });
@@ -94,6 +96,7 @@ public class HomeFragment extends Fragment {
         btAccounts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                btAccounts.playAnimation();
                 showPopupAccounts(btAccounts);
             }
         });

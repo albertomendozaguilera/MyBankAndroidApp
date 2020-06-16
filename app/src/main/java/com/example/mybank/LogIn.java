@@ -5,11 +5,14 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.hardware.biometrics.BiometricPrompt;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CancellationSignal;
+import android.os.Handler;
 import android.text.TextUtils;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,8 +22,11 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.preference.PreferenceManager;
 
+import com.airbnb.lottie.LottieAnimationView;
+import com.airbnb.lottie.LottieDrawable;
 import com.example.mybank.restclient.dto.UserDTO;
 import com.example.mybank.restclient.interfaces.PostService;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -44,12 +50,15 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
 
     private FirebaseAuth mAuth;
     private EditText etUsername, etEmail, etPassword;
+    private CardView cardBankLogo, cardLogin;
+    private LottieAnimationView authenticationSuccess, loadingLogo;
     private TextView btLogout;
     private ImageView btFingerprint;
     private Button login;
     private ProgressDialog progressDialog;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
+    private final Handler handler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +67,12 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         editor = sharedPreferences.edit();
         mAuth = FirebaseAuth.getInstance();
+
+        authenticationSuccess = findViewById(R.id.authenticationSuccess);
+        authenticationSuccess.setVisibility(View.INVISIBLE);
+
+        cardBankLogo = findViewById(R.id.cardBankLogo);
+        loadingLogo = findViewById(R.id.bankLogo);
 
         etUsername = findViewById(R.id.etUsername);
         etEmail = findViewById(R.id.etEmail);
@@ -70,23 +85,44 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
         etEmail.setVisibility(View.INVISIBLE);
         btFingerprint.setVisibility(View.INVISIBLE);
 
+        showLogo();
+
         progressDialog = new ProgressDialog(this);
 
         if (mAuth.getCurrentUser() != null){
             if (sharedPreferences.getBoolean("session", false) == true) {
-                progressDialog.setMessage("iniciando sesion...");
+                progressDialog.setMessage(R.string.loging_in);
                 progressDialog.show();
                 Intent i = new Intent(getApplicationContext(), Main.class);
                 startActivity(i);
-                Toast.makeText(LogIn.this, "sesion iniciada", Toast.LENGTH_LONG).show();
                 progressDialog.dismiss();
             }else {
-                login.setText("SignIn");
+                login.setText(R.string.bt_signin);
                 btFingerprint.setVisibility(View.VISIBLE);
-                login.setOnClickListener(new View.OnClickListener() {
+                /*login.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        cardLogin.setElevation(2);
                         signIn();
+                    }
+                });*/
+                login.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        switch (event.getAction()) {
+                            case MotionEvent.ACTION_DOWN: {
+                                login.setBackgroundResource(R.drawable.custom_button);
+                                login.setTextColor(Color.parseColor("#FFC107"));
+                                break;
+                            }
+                            case MotionEvent.ACTION_UP: {
+                                login.setBackgroundResource(R.drawable.custom_button_pressed);
+                                login.setTextColor(Color.parseColor("#0B8FBA"));
+                                signIn();
+                                break;
+                            }
+                        }
+                        return false;
                     }
                 });
                 btFingerprint.setOnClickListener(new View.OnClickListener() {
@@ -95,16 +131,35 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
                         fingerprint();
                     }
                 });
-                //fingerprint();
             }
         }else{
-            login.setText("SignUp");
+            login.setText(R.string.bt_signup);
             etUsername.setVisibility(View.VISIBLE);
             etEmail.setVisibility(View.VISIBLE);
-            login.setOnClickListener(new View.OnClickListener() {
+            /*login.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    cardLogin.setElevation(2);
                     signUp();
+                }
+            });*/
+            login.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    switch (event.getAction()) {
+                        case MotionEvent.ACTION_DOWN: {
+                            login.setBackgroundResource(R.drawable.custom_button);
+                            login.setTextColor(Color.parseColor("#FFC107"));
+                            break;
+                        }
+                        case MotionEvent.ACTION_UP: {
+                            login.setBackgroundResource(R.drawable.custom_button_pressed);
+                            login.setTextColor(Color.parseColor("#0B8FBA"));
+                            signUp();
+                            break;
+                        }
+                    }
+                    return false;
                 }
             });
         }
@@ -114,12 +169,12 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
     //crea un dialog para introducir una huella
     public void fingerprint(){
         final Executor executor = Executors.newSingleThreadExecutor();
-        final LogIn activity = this;
+        //final LogIn activity = this;
 
         if (Build.VERSION.SDK_INT >= 28) {
             final BiometricPrompt bp = new BiometricPrompt.Builder(this)
-                    .setTitle("fingerprint")
-                    .setNegativeButton("cancel", executor, new DialogInterface.OnClickListener() {
+                    .setTitle(R.string.fingerprint)
+                    .setNegativeButton(R.string.cancel, executor, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                         }
@@ -129,8 +184,7 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
                 @Override
                 public void onAuthenticationSucceeded(BiometricPrompt.AuthenticationResult result) {
                     super.onAuthenticationSucceeded(result);
-                    Intent i = new Intent(getApplicationContext(), Main.class);
-                    startActivity(i);
+                    startApp();
                 }
             });
         }
@@ -141,22 +195,20 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
         final String password = etPassword.getText().toString().trim();
 
         if (TextUtils.isEmpty(password)) {
-            Toast.makeText(this, "contraseña incorrecta", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.wrong_password, Toast.LENGTH_LONG).show();
             return;
         }
 
-        progressDialog.setMessage("iniciando sesion...");
+        progressDialog.setMessage(R.string.loging_in);
         progressDialog.show();
 
         mAuth.signInWithEmailAndPassword(mAuth.getCurrentUser().getEmail(), password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    Intent i = new Intent(getApplicationContext(), Main.class);
-                    startActivity(i);
-                    Toast.makeText(LogIn.this, "sesion iniciada", Toast.LENGTH_LONG).show();
+                    startApp();
                 } else {
-                    Toast.makeText(LogIn.this, "error al iniciar sesion", Toast.LENGTH_LONG).show();
+                    Toast.makeText(LogIn.this, R.string.error_loging_in, Toast.LENGTH_LONG).show();
                 }
                 progressDialog.dismiss();}
         });
@@ -170,19 +222,19 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
         final String password = etPassword.getText().toString().trim();
 
         if (TextUtils.isEmpty(username)){
-            Toast.makeText(this, "Debes introducir un usuario", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.enter_username, Toast.LENGTH_LONG).show();
             return;
         }
         if (TextUtils.isEmpty(email)){
-            Toast.makeText(this, "Debes introducir un email", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.enter_email, Toast.LENGTH_LONG).show();
             return;
         }
         if (TextUtils.isEmpty(password)){
-            Toast.makeText(this, "Debes introducir una contraseña", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.enter_password, Toast.LENGTH_LONG).show();
             return;
         }
 
-        progressDialog.setMessage("iniciando sesion...");
+        progressDialog.setMessage(R.string.loging_in);
         progressDialog.show();
         //intenta iniciar sesion
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -190,18 +242,16 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
                     progressDialog.dismiss();
-                    Intent i = new Intent(getApplicationContext(), Main.class);
-                    startActivity(i);
-                    Toast.makeText(LogIn.this, "sesion iniciada", Toast.LENGTH_LONG).show();
+                    startApp();
                 }else{
                     progressDialog.dismiss();
                     //si no existe el usuario pregunta si quiere crear uno nuevo
                         AlertDialog.Builder builder = new AlertDialog.Builder(LogIn.this);
-                        builder.setMessage("¿quieres crear uno nuevo?")
-                                .setTitle("El usuario no existe");
-                        builder.setPositiveButton("SI", new DialogInterface.OnClickListener() {
+                        builder.setMessage(R.string.new_user)
+                                .setTitle(R.string.user_not_exist);
+                        builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                progressDialog.setMessage("registrando...");
+                                progressDialog.setMessage(R.string.check_in);
                                 progressDialog.show();
 
                                 mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(LogIn.this, new OnCompleteListener<AuthResult>() {
@@ -216,13 +266,11 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
                                             dbuser.child("password").setValue(password);
 
                                             //inicia la main activity
-                                            Intent i = new Intent(getApplicationContext(), Main.class);
-                                            startActivity(i);
-                                            Toast.makeText(LogIn.this, "usuario creado", Toast.LENGTH_LONG).show();
+                                            startApp();
 
                                         }else{
                                             if (task.getException() instanceof FirebaseAuthUserCollisionException){
-                                                Toast.makeText(LogIn.this, "Ese usuario ya existe", Toast.LENGTH_LONG).show();
+                                                Toast.makeText(LogIn.this, R.string.user_already_exist, Toast.LENGTH_LONG).show();
                                             }
                                             Toast.makeText(LogIn.this, task.getException().toString(), Toast.LENGTH_LONG).show();
                                         }
@@ -231,7 +279,7 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
                                 });
                             }
                         });
-                        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                        builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                             }
                         });
@@ -275,14 +323,47 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
         call.enqueue(new Callback<UserDTO>() {
             @Override
             public void onResponse(Call<UserDTO> call, Response<UserDTO> response) {
-                Toast.makeText(getBaseContext(), "Http Status: " + response.code(), Toast.LENGTH_LONG).show();
+                System.out.println("Http Status: " + response.code());
             }
 
             @Override
             public void onFailure(Call<UserDTO> call, Throwable t) {
-                Toast.makeText(getBaseContext(), "Http Status: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                System.out.println("Http Status: " + t.getMessage());
             }
         });
 
+    }
+
+    private void showLogo(){
+        cardBankLogo.bringToFront();
+        btLogout.setVisibility(View.INVISIBLE);
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                loadingLogo.setRepeatCount(0);
+                cardBankLogo.setVisibility(View.INVISIBLE);
+                login.setVisibility(View.VISIBLE);
+                btLogout.setVisibility(View.VISIBLE);
+            }
+        }, 3000);
+    }
+
+    private void startApp(){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                authenticationSuccess.setVisibility(View.VISIBLE);
+                authenticationSuccess.bringToFront();
+                login.setVisibility(View.INVISIBLE);
+            }
+        });
+        authenticationSuccess.playAnimation();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent i = new Intent(getApplicationContext(), Main.class);
+                startActivity(i);
+            }
+        }, 1500);
     }
 }

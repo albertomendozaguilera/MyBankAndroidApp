@@ -80,10 +80,10 @@ public class InfoFragment extends Fragment implements View.OnClickListener {
                         public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
                             switch (position) {
                                 case 0:
-                                    tab.setText("INGRESOS");
+                                    tab.setText(R.string.tv_incomes);
                                     break;
                                 case 1:
-                                    tab.setText("GASTOS");
+                                    tab.setText(R.string.tv_expenses);
                                     break;
                             }
                         }
@@ -267,11 +267,11 @@ public class InfoFragment extends Fragment implements View.OnClickListener {
         tvIncome.setText(""+income);
         tvExpenses.setText(""+expenses);
         if (savings > 0) {
-            tvSavings.setText("Has ahorrado " + df.format(savings) + "€");
+            tvSavings.setText("Has ahorrado  + df.format(savings) + "€");
         }else if(savings < 0){
-            tvSavings.setText("Te has pasado " + df.format(savings) + "€");
+            tvSavings.setText("Te has pasado  + df.format(savings) + "€");
         }else{
-            tvSavings.setText("No has ahorrado nada, pero tampoco te has pasado");
+            tvSavings.setText( has ahorrado nada, pero tampoco te has pasado");
         }
     }
 
