@@ -9,7 +9,7 @@ public class AccountDTO implements Serializable {
     private String name;
     private double balance;
     private ArrayList<PaymentTransactionsDTO> transactionsDTOList;
-    private ArrayList<LoanDTO> loansList;
+    private ArrayList<LoanDTO> loansDTOList;
 
     public UserDTO getUserDTO() {
         return userDTO;
@@ -51,12 +51,12 @@ public class AccountDTO implements Serializable {
         this.transactionsDTOList = transactionsDTOList;
     }
 
-    public ArrayList<LoanDTO> getLoansList() {
-        return loansList;
+    public ArrayList<LoanDTO> getLoansDTOList() {
+        return loansDTOList;
     }
 
-    public void setLoansList(ArrayList<LoanDTO> loansList) {
-        this.loansList = loansList;
+    public void setLoansDTOList(ArrayList<LoanDTO> loansDTOList) {
+        this.loansDTOList = loansDTOList;
     }
 
     @Override

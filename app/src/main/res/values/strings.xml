@@ -65,4 +65,5 @@
     <string name="description">DESCRIPTION</string>
     <string name="add_phone"> + Add Phone</string>
     <string name="add_address"> + Add Address</string>
+    <string name="payed">payed</string>
 </resources>

@@ -222,6 +222,7 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
 
         progressDialog.setMessage(getResources().getString(R.string.loging_in));
         progressDialog.show();
+        System.out.println("hola");
         //intenta iniciar sesion
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
@@ -230,6 +231,7 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
                     progressDialog.dismiss();
                     startApp();
                 }else{
+                    System.out.println("adios");
                     progressDialog.dismiss();
                     //si no existe el usuario pregunta si quiere crear uno nuevo
                         AlertDialog.Builder builder = new AlertDialog.Builder(LogIn.this);
@@ -343,6 +345,7 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
                 login.setVisibility(View.INVISIBLE);
             }
         });
+        authenticationSuccess.setRepeatCount(1);
         authenticationSuccess.playAnimation();
         handler.postDelayed(new Runnable() {
             @Override

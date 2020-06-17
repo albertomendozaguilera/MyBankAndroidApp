@@ -1,6 +1,8 @@
 package com.example.mybank.restclient.dto;
 
-public class ReceiptDTO {
+import java.io.Serializable;
+
+public class ReceiptDTO implements Serializable {
     private AccountDTO accountDTO;
     private LoanDTO loanDTO;
     private int receiptNum;

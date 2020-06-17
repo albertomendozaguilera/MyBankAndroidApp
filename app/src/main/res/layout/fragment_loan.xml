@@ -48,30 +48,6 @@
                 android:inputType="textPersonName" />
         </androidx.cardview.widget.CardView>
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardView6"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="50dp"
-            android:layout_marginEnd="10dp"
-            app:cardCornerRadius="10dp"
-            app:cardElevation="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardView5">
-
-            <EditText
-                android:id="@+id/etMonths"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:backgroundTint="#FFEB3B"
-                android:hint="MESES"
-                android:inputType="textPersonName" />
-        </androidx.cardview.widget.CardView>
-
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/loadingAnimation"
             android:layout_width="wrap_content"
@@ -120,7 +96,7 @@
             android:layout_marginEnd="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardView6">
+            app:layout_constraintTop_toBottomOf="@+id/cardView5">
 
             <EditText
                 android:id="@+id/etConcept"
@@ -136,14 +112,27 @@
             android:id="@+id/btRequest"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
             android:background="@drawable/custom_button_pressed"
             android:text="Solicitar"
             android:textColor="#0B8FBA"
             android:textSize="30sp"
-            app:layout_constraintBottom_toBottomOf="@+id/loadingAnimation"
             app:layout_constraintEnd_toEndOf="@+id/loadingAnimation"
             app:layout_constraintStart_toStartOf="@+id/loadingAnimation"
-            app:layout_constraintTop_toTopOf="@+id/loadingAnimation" />
+            app:layout_constraintTop_toBottomOf="@+id/paymentWaysSpinner" />
+
+        <Button
+            android:id="@+id/btSeeAllLoans"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_button_pressed"
+            android:text="@string/bt_seeall"
+            android:textColor="#0B8FBA"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btRequest" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

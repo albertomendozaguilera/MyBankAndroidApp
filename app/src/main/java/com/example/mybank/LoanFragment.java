@@ -1,5 +1,6 @@
 package com.example.mybank;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
@@ -42,15 +43,15 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoanFragment extends Fragment {
 
-    private EditText etQuantity, etMonths, etConcept;
+    private EditText etQuantity, etConcept;
     private Spinner accountsSpinner, paymentWaysSpinner;
-    private Button btRequest;
+    private Button btRequest, btSeeAllLoans;
     private LottieAnimationView loadingAnimation;
     private UserDTO user;
     private ArrayList<String> accountsIban, paymentWaysDescription;
     private PaymentWaysController paymentWaysController;
     private ArrayList<PaymentWayDTO> paymentWayDTOS, paymentWayDTOSOUT;
-    private int accountId;
+    private int accountIdSpinner, accountId;
     private SharedPreferences preferences;
 
     public LoanFragment() {
@@ -78,23 +79,16 @@ public class LoanFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_loan, container, false);
+
+        getSelectedAccountId();
+
         etQuantity = view.findViewById(R.id.etQuantity);
-        etMonths = view.findViewById(R.id.etMonths);
         etConcept = view.findViewById(R.id.etConcept);
         accountsSpinner = view.findViewById(R.id.accountsSpinner);
         paymentWaysSpinner = view.findViewById(R.id.paymentWaysSpinner);
         loadingAnimation = view.findViewById(R.id.loadingAnimation);
-        btRequest = view.findViewById(R.id.btRequest);
-        /*btRequest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                btRequest.setVisibility(View.INVISIBLE);
-                loadingAnimation.playAnimation();
-                loadingAnimation.setRepeatCount(LottieDrawable.INFINITE);
-                addLoan(paymentWaysDescription.get(paymentWaysSpinner.getSelectedItemPosition()));
-            }
-        });*/
 
+        btRequest = view.findViewById(R.id.btRequest);
         btRequest.setOnTouchListener(new View.OnTouchListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
@@ -119,6 +113,31 @@ public class LoanFragment extends Fragment {
             }
         });
 
+        btSeeAllLoans = view.findViewById(R.id.btSeeAllLoans);
+        btSeeAllLoans.setOnTouchListener(new View.OnTouchListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN: {
+                        btSeeAllLoans.setBackgroundResource(R.drawable.custom_button);
+                        btSeeAllLoans.setTextColor(Color.parseColor("#FFC107"));
+                        break;
+                    }
+                    case MotionEvent.ACTION_UP: {
+                        btSeeAllLoans.setBackgroundResource(R.drawable.custom_button_pressed);
+                        btSeeAllLoans.setTextColor(Color.parseColor("#0B8FBA"));
+                        Intent i = new Intent(v.getContext().getApplicationContext(), LoansList.class);
+                        i.putExtra("user", user);
+                        i.putExtra("selectedAccount", accountId);
+                        startActivity(i);
+                        break;
+                    }
+                }
+                return false;
+            }
+        });
+
         paymentWayDTOSOUT = new ArrayList();
         getPaymentWays(paymentWaysController);
         ArrayAdapter<String> accountsAdapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), R.layout.support_simple_spinner_dropdown_item, accountsIban);
@@ -127,6 +146,7 @@ public class LoanFragment extends Fragment {
         // Apply the adapter to the spinner
 
         accountsSpinner.setAdapter(accountsAdapter);
+
         return view;
     }
 
@@ -158,7 +178,6 @@ public class LoanFragment extends Fragment {
             @Override
             public void getPaymentWaysDTO(List<PaymentWayDTO> paymentWayDTO) {
                 paymentWayDTOS = (ArrayList<PaymentWayDTO>) paymentWayDTO;
-                getSelectedAccountId();
 
                 if (checkFields()){
                     String concept = etConcept.getText().toString();
@@ -174,12 +193,12 @@ public class LoanFragment extends Fragment {
                             accountUser.setId(user.getId());
                             accountUser.setName(user.getName());
 
-                            getSelectedAccountId();
+                            getSelectedAccountIdSpinner();
 
-                            user.getAccountsList().get(accountId).setUserDTO(accountUser);
+                            user.getAccountsList().get(accountIdSpinner).setUserDTO(accountUser);
 
 
-                            loanDTO.setAccountDTO(user.getAccountsList().get(accountId));
+                            loanDTO.setAccountDTO(user.getAccountsList().get(accountIdSpinner));
                             loanDTO.setLoanNum(null);
                             loanDTO.setDescription(concept);
                             loanDTO.setPaymentWay(paymentWayDTOItem.getCod());
@@ -248,12 +267,19 @@ public class LoanFragment extends Fragment {
         return true;
     }
 
-    private void getSelectedAccountId() {
-        for (accountId = 0; accountId < user.getAccountsList().size(); accountId++){
-            if (accountsSpinner.getSelectedItem().equals(user.getAccountsList().get(accountId).getIban())){
+    private void getSelectedAccountIdSpinner() {
+        for (accountIdSpinner = 0; accountIdSpinner < user.getAccountsList().size(); accountIdSpinner++){
+            if (accountsSpinner.getSelectedItem().equals(user.getAccountsList().get(accountIdSpinner).getIban())){
                 break;
             }
         }
     }
 
+    private void getSelectedAccountId() {
+        for (accountId = 0; accountId < user.getAccountsList().size(); accountId++){
+            if (preferences.getString("selectedAccount", "false").equals(user.getAccountsList().get(accountId).getIban())){
+                break;
+            }
+        }
+    }
 }

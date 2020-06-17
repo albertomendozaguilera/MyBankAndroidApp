@@ -1,8 +1,9 @@
 package com.example.mybank.restclient.dto;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class LoanDTO {
+public class LoanDTO implements Serializable {
     private String loanNum;
     private AccountDTO accountDTO;
     private String date;

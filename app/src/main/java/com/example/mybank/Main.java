@@ -24,6 +24,7 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.example.mybank.restclient.controllers.PaymentWaysController;
 import com.example.mybank.restclient.controllers.UserController;
 import com.example.mybank.restclient.dto.AccountDTO;
+import com.example.mybank.restclient.dto.LoanDTO;
 import com.example.mybank.restclient.dto.PaymentWayDTO;
 import com.example.mybank.restclient.dto.UserDTO;
 import com.example.mybank.restclient.interfaces.OnPaymentWaysResponse;

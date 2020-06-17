@@ -56,4 +56,5 @@
     <string name="add_address">" + añadir direccion"</string>
     <string name="tv_overcost">Te has pasado:</string>
     <string name="tv_none_saving_overcost">No has ahorrado nada</string>
+    <string name="payed">pagado</string>
 </resources>
