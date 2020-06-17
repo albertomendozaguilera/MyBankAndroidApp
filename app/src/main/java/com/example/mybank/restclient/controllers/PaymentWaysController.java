@@ -1,5 +1,6 @@
 package com.example.mybank.restclient.controllers;
 
+import com.example.mybank.restclient.constants.Constants;
 import com.example.mybank.restclient.dto.PaymentWayDTO;
 import com.example.mybank.restclient.interfaces.GetService;
 import com.example.mybank.restclient.interfaces.OnPaymentWaysResponse;
@@ -16,7 +17,7 @@ public class PaymentWaysController {
     public void getPaymentWaysInfo(final OnPaymentWaysResponse callback){
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:8080")
+                .baseUrl(Constants.HEROKU_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

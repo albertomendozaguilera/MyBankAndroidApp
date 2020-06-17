@@ -22,6 +22,7 @@ import androidx.preference.PreferenceManager;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.airbnb.lottie.LottieDrawable;
+import com.example.mybank.restclient.constants.Constants;
 import com.example.mybank.restclient.controllers.PaymentWaysController;
 import com.example.mybank.restclient.dto.AccountDTO;
 import com.example.mybank.restclient.dto.LoanDTO;
@@ -212,7 +213,7 @@ public class LoanFragment extends Fragment {
 
 
                             Retrofit retrofit = new Retrofit.Builder()
-                                    .baseUrl("http://10.0.2.2:8080")
+                                    .baseUrl(Constants.HEROKU_URL)
                                     .addConverterFactory(GsonConverterFactory.create())
                                     .build();
 

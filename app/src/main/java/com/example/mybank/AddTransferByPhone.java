@@ -1,9 +1,5 @@
 package com.example.mybank;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.preference.PreferenceManager;
-
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -16,6 +12,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
+
+import com.example.mybank.restclient.constants.Constants;
 import com.example.mybank.restclient.controllers.UserController;
 import com.example.mybank.restclient.dto.PaymentTransactionsDTO;
 import com.example.mybank.restclient.dto.UserDTO;
@@ -179,7 +180,7 @@ public class AddTransferByPhone extends AppCompatActivity {
         transactionDTO.setDatetime(dtf.format(now));
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:8080")
+                .baseUrl(Constants.HEROKU_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

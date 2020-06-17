@@ -1,5 +1,6 @@
 package com.example.mybank.restclient.controllers;
 
+import com.example.mybank.restclient.constants.Constants;
 import com.example.mybank.restclient.dto.UserDTO;
 import com.example.mybank.restclient.interfaces.GetService;
 import com.example.mybank.restclient.interfaces.OnUserInfoResponse;
@@ -15,7 +16,7 @@ public class UserController {
     public void getUserInfo(String id, final OnUserInfoResponse callback){
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:8080")
+                .baseUrl(Constants.HEROKU_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
