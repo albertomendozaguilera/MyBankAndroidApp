@@ -62,8 +62,6 @@ public class Main extends AppCompatActivity implements View.OnClickListener{
 
         userController = new UserController();
 
-        //accountsList = new ArrayList();
-
         userController.getUserInfo(mAuth.getUid(), new OnUserInfoResponse() {
             @Override
             public void getUserDTO(UserDTO userDTO) {
@@ -79,7 +77,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener{
                 loadingView.setAnimation(R.raw.error_in_cloud);
                 loadingView.setRepeatCount(1);
                 loadingView.playAnimation();
-                Toast.makeText(getApplicationContext(), " los servicios se encuentran en mantenimiento en estos momentos, intentelo de nuevo mas tarde", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), R.string.servicesOff, Toast.LENGTH_LONG).show();
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -90,28 +88,16 @@ public class Main extends AppCompatActivity implements View.OnClickListener{
         });
     }
 
+
+    public void setUser(UserDTO user){
+        System.out.println("HOLA "+user);
+    }
+
     private void finishActivity (){
         Intent i = new Intent(getApplicationContext(), LogIn.class);
         this.finish();
         startActivity(i);
     }
-
-    /*@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-        switch (id){
-            case R.id.settings:
-                Toast.makeText(this, "HOLA", Toast.LENGTH_LONG).show();
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }*/
 
     @Override
     public void onClick(View v) {

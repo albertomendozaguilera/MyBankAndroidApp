@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -54,6 +55,7 @@ public class LoanFragment extends Fragment {
     private ArrayList<PaymentWayDTO> paymentWayDTOS, paymentWayDTOSOUT;
     private int accountIdSpinner, accountId;
     private SharedPreferences preferences;
+    private final Handler handler = new Handler();
 
     public LoanFragment() {
         // Required empty public constructor
@@ -213,7 +215,7 @@ public class LoanFragment extends Fragment {
 
 
                             Retrofit retrofit = new Retrofit.Builder()
-                                    .baseUrl(Constants.HEROKU_URL)
+                                    .baseUrl(Constants.LOCALHOST)
                                     .addConverterFactory(GsonConverterFactory.create())
                                     .build();
 
@@ -228,7 +230,15 @@ public class LoanFragment extends Fragment {
                                     loadingAnimation.setAnimation(R.raw.check_ok);
                                     loadingAnimation.setRepeatCount(0);
                                     loadingAnimation.playAnimation();
-                                    System.out.println("Http Status: " + response.code());
+                                    handler.postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            getActivity().finish();
+                                            Intent i = new Intent(getActivity().getApplicationContext(), Main.class);
+                                            startActivity(i);
+                                        }
+                                    }, 2000);
+                                    //System.out.println("Http Status: " + response.code());
                                 }
 
                                 @Override
@@ -237,7 +247,7 @@ public class LoanFragment extends Fragment {
                                     loadingAnimation.setRepeatCount(0);
                                     loadingAnimation.playAnimation();
                                     Toast.makeText(getActivity().getApplicationContext(), R.string.error_try_later, Toast.LENGTH_LONG).show();
-                                    System.out.println("Http Status: " + t.getMessage());
+                                    //System.out.println("Http Status: " + t.getMessage());
                                 }
                             });
                         }

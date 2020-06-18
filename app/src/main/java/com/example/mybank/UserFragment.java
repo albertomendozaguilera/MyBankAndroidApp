@@ -151,8 +151,9 @@ public class UserFragment extends Fragment implements View.OnClickListener {
                 mAuth.signOut();
                 editor.putString("selectedAccount","false");
                 editor.putBoolean("session", false);
-                Intent i = new Intent(getActivity().getApplicationContext(), LogIn.class);
+                editor.commit();
                 getActivity().finish();
+                Intent i = new Intent(getActivity().getApplicationContext(), LogIn.class);
                 startActivity(i);
                 break;
         }

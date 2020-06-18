@@ -26,6 +26,7 @@ public class TransactionsList extends AppCompatActivity {
     private RecyclerAdapter adapter;
     private ArrayList transactionsList;
     private UserDTO user;
+    private int accountId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +34,7 @@ public class TransactionsList extends AppCompatActivity {
         setContentView(R.layout.activity_transactions_list);
         Intent i = getIntent();
         user = (UserDTO) i.getSerializableExtra("user");
+        accountId = i.getIntExtra("accountId", 0);
 
         transactionsList = new ArrayList();
 
@@ -42,7 +44,7 @@ public class TransactionsList extends AppCompatActivity {
         recyclerView.setLayoutManager(lm);
 
 
-        transactionsList = user.getAccountsList().get(0).getTransactionsDTOList();
+        transactionsList = user.getAccountsList().get(accountId).getTransactionsDTOList();
         adapter = new RecyclerAdapter(transactionsList, getApplicationContext());
         recyclerView.setAdapter(adapter);
     }

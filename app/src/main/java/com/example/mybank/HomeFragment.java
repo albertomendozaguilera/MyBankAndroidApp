@@ -48,6 +48,10 @@ public class HomeFragment extends Fragment {
         }
         preferences = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
         editor = preferences.edit();
+        if (preferences.getString("selectedAccount", "false").equals("null")) {
+            editor.putString("selectedAccount", user.getAccountsList().get(0).getIban());
+            editor.commit();
+        }
     }
 
 
@@ -81,6 +85,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
                 Intent i = new Intent(v.getContext().getApplicationContext(), TransactionsList.class);
                 i.putExtra("user", user);
+                i.putExtra("accountId", accountId);
                 startActivity(i);
             }
         });
@@ -132,7 +137,6 @@ public class HomeFragment extends Fragment {
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-
                 editor.putString("selectedAccount", item.getTitle().toString());
                 editor.commit();
                 getSelectedAccountId();

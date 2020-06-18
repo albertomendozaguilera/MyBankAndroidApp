@@ -50,7 +50,7 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
 
     private FirebaseAuth mAuth;
     private EditText etUsername, etEmail, etPassword;
-    private CardView cardBankLogo, cardLogin;
+    private CardView cardBankLogo;
     private LottieAnimationView authenticationSuccess, loadingLogo;
     private TextView btLogout;
     private ImageView btFingerprint;
@@ -284,7 +284,10 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
         switch (v.getId()){
             case R.id.btLogout:
                 mAuth.signOut();
-                editor.putString("selectedAccount", "false");
+                System.out.println(sharedPreferences.getString("selectedAccount", "hola"));
+                editor.putString("selectedAccount", "null");
+                editor.commit();
+                System.out.println(sharedPreferences.getString("selectedAccount", "hola"));
                 editor.putBoolean("session", false);
                 Intent i = new Intent(getApplicationContext(), LogIn.class);
                 finish();
@@ -301,7 +304,7 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
         userDTO.setId(id);
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constants.HEROKU_URL)
+                .baseUrl(Constants.LOCALHOST)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -312,6 +315,9 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
             @Override
             public void onResponse(Call<UserDTO> call, Response<UserDTO> response) {
                 System.out.println("Http Status: " + response.code());
+                Intent i = new Intent(getApplicationContext(), LogIn.class);
+                finish();
+                startActivity(i);
             }
 
             @Override

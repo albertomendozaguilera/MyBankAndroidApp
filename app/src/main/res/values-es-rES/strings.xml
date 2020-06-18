@@ -35,7 +35,7 @@
     <string name="check_in">Iniciando sesión</string>
     <string name="user_already_exist">el ya existe existe</string>
     <string name="cancel">Cancelar</string>
-    <string name="tv_your_balance">Tu saldo</string>
+    <string name="tv_your_balance">"   Tu saldo"</string>
     <string name="bt_settings">ajustes</string>
     <string name="tv_seeall">ver todos</string>
     <string name="tv_incomes">INGRESOS</string>
@@ -57,4 +57,6 @@
     <string name="tv_overcost">Te has pasado:</string>
     <string name="tv_none_saving_overcost">No has ahorrado nada</string>
     <string name="payed">pagado</string>
+    <string name="servicesOff">Nuestros servicios no se encuentran disponibles, por favor intentalo de nuevo mas tarde</string>
+    <string name="phone_not_exist">El numero indicado no tiene una cuenta vinculada</string>
 </resources>

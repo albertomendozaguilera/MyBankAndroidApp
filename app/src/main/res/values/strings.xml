@@ -44,7 +44,7 @@
     <string name="check_in">checking in</string>
     <string name="user_already_exist">user already exist</string>
     <string name="cancel">Cancel</string>
-    <string name="tv_your_balance">Your balance:</string>
+    <string name="tv_your_balance">"   Your balance:"</string>
     <string name="bt_settings">settings</string>
     <string name="tv_seeall">See All</string>
     <string name="tv_incomes">INCOMES</string>
@@ -66,4 +66,6 @@
     <string name="add_phone"> + Add Phone</string>
     <string name="add_address"> + Add Address</string>
     <string name="payed">payed</string>
+    <string name="servicesOff">Our services are off, please try again later</string>
+    <string name="phone_not_exist">that phone doesn\'t have a vinculated account</string>
 </resources>

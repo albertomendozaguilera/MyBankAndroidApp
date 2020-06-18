@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -50,16 +49,6 @@ public class RecyclerLoanAdapter extends RecyclerView.Adapter<RecyclerLoanAdapte
     public void onBindViewHolder(@NonNull final RecyclerLoanAdapter.ViewHolder holder, final int position) {
         holder.tvDescription.setText(String.valueOf(loanList.get(position).getDescription()));
         holder.tvQuantity.setText(String.valueOf(loanList.get(position).getQuantity()));
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(v.getContext(), ReceiptsList.class);
-                i.putExtra("selectedAccount", selectedAccount);
-                i.putExtra("selectedLoan", position);
-                i.putExtra("user", user);
-                holder.itemView.getContext().startActivity(i);
-            }
-        });
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

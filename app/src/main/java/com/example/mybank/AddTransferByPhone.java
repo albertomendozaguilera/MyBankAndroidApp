@@ -1,6 +1,7 @@
 package com.example.mybank;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
@@ -54,6 +55,9 @@ public class AddTransferByPhone extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_transfer_by_phone);
         mAuth = FirebaseAuth.getInstance();
+
+        userController = new UserController();
+
         findViewsById();
 
         Bundle extras = getIntent().getExtras();
@@ -71,14 +75,6 @@ public class AddTransferByPhone extends AppCompatActivity {
         etQuantity = findViewById(R.id.etQuantity);
         etConcept = findViewById(R.id.etConcept);
         btAddTransactionByPhone = findViewById(R.id.btAddTransactionByPhone);
-        /*btAddTransactionByPhone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (checkFields()) {
-                    checkUser();
-                }
-            }
-        });*/
         btAddTransactionByPhone.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -144,16 +140,18 @@ public class AddTransferByPhone extends AppCompatActivity {
                 boolean checkOk = false;
                 progressDialog.show();
                 for (DataSnapshot dataSnapshott : dataSnapshot.getChildren()){
-                    if (dataSnapshott.child("phone").getValue()!=null && dataSnapshott.child("phone").getValue().equals(etPhone.getText())){
-                        getUser(dataSnapshott.getKey());
-                        checkOk = true;
-                        progressDialog.dismiss();
-                        break;
+                    if (dataSnapshott.child("phone")!=null) {
+                        if (dataSnapshott.child("phone").getValue().equals(etPhone.getText().toString())) {
+                            getUser(dataSnapshott.getKey());
+                            checkOk = true;
+                            progressDialog.dismiss();
+                            break;
+                        }
                     }
                 }
                 progressDialog.dismiss();
                 if (!checkOk){
-                    Toast.makeText(getApplicationContext(), "Ese numero no está vinculado a ninguna cuenta o no existe", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), R.string.phone_not_exist, Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -168,9 +166,9 @@ public class AddTransferByPhone extends AppCompatActivity {
     private void addTransaction(UserDTO userDTO){
         PaymentTransactionsDTO transactionDTO = new PaymentTransactionsDTO();
         transactionDTO.setId(null);
-        transactionDTO.setAccountDTO(mainUser.getAccountsList().get(accountId));
+        //transactionDTO.setAccountDTO(mainUser.getAccountsList().get(accountId));
         transactionDTO.setDestinyAccount(userDTO.getAccountsList().get(0).getIban());
-        transactionDTO.setQuantity(Double.parseDouble(etQuantity.getText().toString()));
+        transactionDTO.setQuantity(Double.parseDouble(etQuantity.getText().toString())*-1);
         transactionDTO.setBeneficiary(userDTO.getName());
         transactionDTO.setConcept(etConcept.getText().toString());
         transactionDTO.setOriginAccount(preferences.getString("selectedAccount", "false"));
@@ -180,7 +178,7 @@ public class AddTransferByPhone extends AppCompatActivity {
         transactionDTO.setDatetime(dtf.format(now));
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constants.HEROKU_URL)
+                .baseUrl(Constants.LOCALHOST)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -190,12 +188,15 @@ public class AddTransferByPhone extends AppCompatActivity {
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                Toast.makeText(getBaseContext(), "Http Status: " + response.code(), Toast.LENGTH_LONG).show();
+                finishAffinity();
+                Intent i = new Intent(getApplicationContext(), Main.class);
+                startActivity(i);
+                //Toast.makeText(getBaseContext(), "Http Status: " + response.code(), Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                Toast.makeText(getBaseContext(), "Http Status: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                //Toast.makeText(getBaseContext(), "Http Status: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }

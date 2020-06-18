@@ -16,7 +16,7 @@ public class UserController {
     public void getUserInfo(String id, final OnUserInfoResponse callback){
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constants.HEROKU_URL)
+                .baseUrl(Constants.LOCALHOST)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

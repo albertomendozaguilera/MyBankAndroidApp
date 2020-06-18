@@ -52,13 +52,13 @@
             android:id="@+id/loadingAnimation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/btRequest"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/paymentWaysSpinner"
+            app:layout_constraintTop_toTopOf="@+id/btRequest"
             app:lottie_autoPlay="true"
             app:lottie_loop="false"
-            app:lottie_rawRes="@raw/payment_processed"/>
+            app:lottie_rawRes="@raw/payment_processed" />
 
 
         <Spinner
@@ -116,7 +116,7 @@
             android:background="@drawable/custom_button_pressed"
             android:text="Solicitar"
             android:textColor="#0B8FBA"
-            android:textSize="30sp"
+            android:textSize="36sp"
             app:layout_constraintEnd_toEndOf="@+id/loadingAnimation"
             app:layout_constraintStart_toStartOf="@+id/loadingAnimation"
             app:layout_constraintTop_toBottomOf="@+id/paymentWaysSpinner" />
@@ -128,7 +128,7 @@
             android:background="@drawable/custom_button_pressed"
             android:text="@string/bt_seeall"
             android:textColor="#0B8FBA"
-            android:textSize="18sp"
+            android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

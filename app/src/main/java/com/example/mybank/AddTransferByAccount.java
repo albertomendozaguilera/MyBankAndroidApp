@@ -1,5 +1,6 @@
 package com.example.mybank;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
@@ -119,9 +120,9 @@ public class AddTransferByAccount extends AppCompatActivity {
     private void addUser(){
         PaymentTransactionsDTO transactionDTO = new PaymentTransactionsDTO();
         transactionDTO.setId(null);
-        transactionDTO.setAccountDTO(user.getAccountsList().get(accountId));
+        transactionDTO.setAccountDTO(null);
         transactionDTO.setDestinyAccount(etIban.getText().toString());
-        transactionDTO.setQuantity(Double.parseDouble(etQuantity.getText().toString()));
+        transactionDTO.setQuantity(Double.parseDouble(etQuantity.getText().toString())*-1);
         transactionDTO.setBeneficiary(etBeneficiary.getText().toString());
         transactionDTO.setConcept(etConcept.getText().toString());
         transactionDTO.setOriginAccount(preferences.getString("selectedAccount", "false"));
@@ -131,7 +132,7 @@ public class AddTransferByAccount extends AppCompatActivity {
         transactionDTO.setDatetime(dtf.format(now));
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constants.HEROKU_URL)
+                .baseUrl(Constants.LOCALHOST)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -141,12 +142,15 @@ public class AddTransferByAccount extends AppCompatActivity {
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                Toast.makeText(getBaseContext(), "Http Status: " + response.code(), Toast.LENGTH_LONG).show();
+                finishAffinity();
+                Intent i = new Intent(getApplicationContext(), Main.class);
+                startActivity(i);
+                //Toast.makeText(getBaseContext(), "Http Status: " + response.code(), Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                Toast.makeText(getBaseContext(), "Http Status: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                //Toast.makeText(getBaseContext(), "Http Status: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }

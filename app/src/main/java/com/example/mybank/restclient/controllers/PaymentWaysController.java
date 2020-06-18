@@ -17,7 +17,7 @@ public class PaymentWaysController {
     public void getPaymentWaysInfo(final OnPaymentWaysResponse callback){
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constants.HEROKU_URL)
+                .baseUrl(Constants.LOCALHOST)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
