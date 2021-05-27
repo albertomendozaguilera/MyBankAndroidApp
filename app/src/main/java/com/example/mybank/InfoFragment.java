@@ -184,13 +184,13 @@ public class InfoFragment extends Fragment implements View.OnClickListener {
             }
         }
 
-        a(list1, biggerTransaction);
-        b(list2, biggerTransaction);
-        c(list3, biggerTransaction);
-        d(list4, biggerTransaction);
+        firstMonth(list1, biggerTransaction);
+        secondMonth(list2, biggerTransaction);
+        thirdMonth(list3, biggerTransaction);
+        fourthMonth(list4, biggerTransaction);
     }
 
-    private void a(ArrayList<PaymentTransactionsDTO>transactionsList, double bigger){
+    private void firstMonth(ArrayList<PaymentTransactionsDTO>transactionsList, double bigger){
         double incomee = 0;
         double expensess = 0;
         for (PaymentTransactionsDTO transaction : transactionsList){
@@ -203,7 +203,7 @@ public class InfoFragment extends Fragment implements View.OnClickListener {
         month4inc.getLayoutParams().height = (int)((incomee*MAXHEIGHT)/bigger);
         month4Exp.getLayoutParams().height = (int)(((expensess*MAXHEIGHT)/bigger)*-1);
     }
-    private void b(ArrayList<PaymentTransactionsDTO>transactionsList, double bigger){
+    private void secondMonth(ArrayList<PaymentTransactionsDTO>transactionsList, double bigger){
         double incomee = 0;
         double expensess = 0;
         for (PaymentTransactionsDTO transaction : transactionsList){
@@ -216,7 +216,7 @@ public class InfoFragment extends Fragment implements View.OnClickListener {
         month3inc.getLayoutParams().height = (int)((incomee*MAXHEIGHT)/bigger);
         month3Exp.getLayoutParams().height = (int)(((expensess*MAXHEIGHT)/bigger)*-1);
     }
-    private void c(ArrayList<PaymentTransactionsDTO>transactionsList, double bigger){
+    private void thirdMonth(ArrayList<PaymentTransactionsDTO>transactionsList, double bigger){
         double incomee = 0;
         double expensess = 0;
         for (PaymentTransactionsDTO transaction : transactionsList){
@@ -229,7 +229,7 @@ public class InfoFragment extends Fragment implements View.OnClickListener {
         month2inc.getLayoutParams().height = (int)((incomee*MAXHEIGHT)/bigger);
         month2Exp.getLayoutParams().height = (int)(((expensess*MAXHEIGHT)/bigger)*-1);
     }
-    private void d(ArrayList<PaymentTransactionsDTO>transactionsList, double bigger){
+    private void fourthMonth(ArrayList<PaymentTransactionsDTO>transactionsList, double bigger){
         double incomee = 0;
         double expensess = 0;
         for (PaymentTransactionsDTO transaction : transactionsList){
