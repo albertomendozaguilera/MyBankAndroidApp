@@ -1,0 +1,35 @@
+name: Manual Generate APK
+
+on:
+
+workflow dispatch:
+
+inputs:
+
+baseUrl:
+
+description: 'Base URL'
+
+required: true
+
+default: 'https://production.example.com/api/v1'
+
+mapkey:
+
+description: 'Map Key'
+
+required: true
+
+default: 'production_sample_key'
+
+reAttempt:
+
+description: Number of re-attempts'
+
+default: '3'
+
+thresholdValue:
+
+description: Threshold value'
+
+default: '0.05'
